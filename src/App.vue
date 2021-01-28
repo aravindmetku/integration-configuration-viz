@@ -1,17 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h3>Integration Processors Viz</h3>
+    <label>
+      <textarea v-model="displayDataStr" placeholder="paste integration api"></textarea>
+    </label>
+    <div class="processorsContainer">
+      <processor v-for="processorData in displayData"
+                 v-bind:key="processorData.processorName"
+                 :p="processorData"></processor>
+    </div>
   </div>
 </template>
 
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Processor from './components/processor.vue'
+
+function compare(a, b) {
+  if (a.run < b.run) {
+    return -1;
+  }
+  if (a.run > b.run) {
+    return 1;
+  }
+  return 0;
+}
 
 export default {
   name: 'App',
+  data: function () {
+    return {
+      displayDataStr: '',
+    }
+  },
+  computed: {
+    displayData: function () {
+      try {
+        return JSON.parse(this.displayDataStr).processors.sort(compare)
+      } catch (e) {
+        return []
+      }
+    }
+  },
   components: {
-    HelloWorld
+    Processor
   }
 }
 </script>
@@ -24,5 +56,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.processorsContainer {
+  display: grid;
 }
 </style>
