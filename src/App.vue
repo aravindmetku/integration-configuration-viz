@@ -7,11 +7,13 @@
                 rows="5"
       ></textarea>
     </label>
-      <div class="processorsContainer">
-        <processor v-for="processorData in displayData"
-                   v-bind:key="processorData.processorName"
-                   :p="processorData"></processor>
-      </div>
+    <div class="processorsContainer">
+      <processor v-for="processorData in displayData"
+                 v-bind:key="processorData.processorName"
+                 :p="processorData"
+                 v-on:input="updateSource($event)"
+      ></processor>
+    </div>
   </div>
 </template>
 
@@ -43,6 +45,18 @@ export default {
       } catch (e) {
         return []
       }
+    }
+  },
+  methods: {
+    updateSource(value) {
+      console.log('update the source now');
+      const current = [...this.displayData];
+      const updated = current.findIndex(p => p.processorName === value.processorName);
+      current[updated] = value;
+
+      let parse = JSON.parse(this.displayDataStr);
+      parse.processors = current;
+      this.displayDataStr = JSON.stringify(parse);
     }
   },
   components: {

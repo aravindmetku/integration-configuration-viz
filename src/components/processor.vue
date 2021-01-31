@@ -2,10 +2,11 @@
 
   <div class="processor" v-bind:style="{marginLeft: (data.run * 100) + 'px'}" @click="showEditor">
 
-    <modal  :name="'editor-' + id"
-            :width="700"
-            :height="800"
-            :adaptive="true">
+    <modal :name="'editor-' + id"
+           :width="700"
+           :height="800"
+           :adaptive="true"
+           @closed="onEditorClosed">
       <v-jsoneditor v-model="data" :options="options" :plus="true" height="800px" @error="onError">
       </v-jsoneditor>
     </modal>
@@ -40,6 +41,11 @@ export default {
     },
     showEditor() {
       this.$modal.show(`editor-${this.id}`)
+    },
+    onEditorClosed() {
+      // console.log('update the main displaystr now' );
+      // console.log(this.data)
+      this.$emit('input', this.data)
     }
   },
   components: {
