@@ -2,13 +2,16 @@
   <div id="app">
     <h3>Integration Processors Viz</h3>
     <label>
-      <textarea v-model="displayDataStr" placeholder="paste integration api"></textarea>
+      <textarea v-model="displayDataStr"
+                placeholder="paste integration api"
+                rows="5"
+      ></textarea>
     </label>
-    <div class="processorsContainer">
-      <processor v-for="processorData in displayData"
-                 v-bind:key="processorData.processorName"
-                 :p="processorData"></processor>
-    </div>
+      <div class="processorsContainer">
+        <processor v-for="processorData in displayData"
+                   v-bind:key="processorData.processorName"
+                   :p="processorData"></processor>
+      </div>
   </div>
 </template>
 
@@ -43,7 +46,7 @@ export default {
     }
   },
   components: {
-    Processor
+    Processor,
   }
 }
 </script>
