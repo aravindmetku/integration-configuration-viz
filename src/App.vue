@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <!-- <h3 style="margin-top:2px">Integration Processors Viz</h3> -->
-     <div style="width:50%;border:2px;">
-      <editor></editor>
+    <div style="width:50%;border:2px;">
+      <editor :content="displayDataStr"></editor>
     </div>
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
     <div style="flex: 1 1 0%">
-    Right<card :processor= "myProcessors"></card>
+      Right
+      <card v-for="p in displayData" v-bind:key="p.processorName" :processor="p"></card>
     </div>
   </div>
 </template>
@@ -30,34 +31,29 @@ export default {
   name: 'App',
   data: function () {
     return {
-     value: 'console.log("Hello, World");',
-     displayDataStr: 'test',
-     item: {
-       content: 'console.log(here is a console log)'
-     },
-     cmOptions: {
-       tabSize: 2,
-       mode: 'javascript',
-       theme: 'monokai',
-       lineNumbers: true,
-       lineWraping: true
-     },
-     resizer: null,
-     x: 0,
-     leftSide: 0,
-     rightSide: 0,
-     leftWidth: 0,
-     myProcessors: {
-      run: 0,
-      name: "First Processor",
-      type: "inBound FS",
-      description: "This is the inbound fs processor"
-     }
+      value: 'console.log("Hello, World");',
+      displayDataStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
+      item: {
+        content: 'console.log(here is a console log)'
+      },
+      cmOptions: {
+        tabSize: 2,
+        mode: 'javascript',
+        theme: 'monokai',
+        lineNumbers: true,
+        lineWraping: true
+      },
+      resizer: null,
+      x: 0,
+      leftSide: 0,
+      rightSide: 0,
+      leftWidth: 0
     }
   },
   computed: {
     displayData: function () {
       try {
+        console.log(JSON.parse(this.displayDataStr).processors.sort(compare))
         return JSON.parse(this.displayDataStr).processors.sort(compare)
       } catch (e) {
         return []
@@ -76,42 +72,42 @@ export default {
       this.displayDataStr = JSON.stringify(parse);
     },
     mouseDownHandler(e) {
-    // Get the current mouse position
-    this.x = e.clientX;
-    // y = e.clientY;
-    this.leftWidth = this.leftSide.getBoundingClientRect().width;
+      // Get the current mouse position
+      this.x = e.clientX;
+      // y = e.clientY;
+      this.leftWidth = this.leftSide.getBoundingClientRect().width;
 
-    // Attach the listeners to `document`
-    document.addEventListener('mousemove', this.mouseMoveHandler);
-    document.addEventListener('mouseup', this.mouseUpHandler);
+      // Attach the listeners to `document`
+      document.addEventListener('mousemove', this.mouseMoveHandler);
+      document.addEventListener('mouseup', this.mouseUpHandler);
     },
     mouseMoveHandler(e) {
-    // How far the mouse has been moved
-    const dx = e.clientX - this.x;
-    // const dy = e.clientY - y;
+      // How far the mouse has been moved
+      const dx = e.clientX - this.x;
+      // const dy = e.clientY - y;
 
-    const newLeftWidth = (this.leftWidth + dx) * 100 / this.resizer.parentNode.getBoundingClientRect().width;
-    this.leftSide.style.width = `${newLeftWidth}%`;
-    document.body.style.cursor = 'col-resize';
-    this.leftSide.style.userSelect = 'none';
-    this.leftSide.style.pointerEvents = 'none';
+      const newLeftWidth = (this.leftWidth + dx) * 100 / this.resizer.parentNode.getBoundingClientRect().width;
+      this.leftSide.style.width = `${newLeftWidth}%`;
+      document.body.style.cursor = 'col-resize';
+      this.leftSide.style.userSelect = 'none';
+      this.leftSide.style.pointerEvents = 'none';
 
-    this.rightSide.style.userSelect = 'none';
-    this.rightSide.style.pointerEvents = 'none';
+      this.rightSide.style.userSelect = 'none';
+      this.rightSide.style.pointerEvents = 'none';
     },
     mouseUpHandler() {
-    this.resizer.style.removeProperty('cursor');
-    document.body.style.removeProperty('cursor');
+      this.resizer.style.removeProperty('cursor');
+      document.body.style.removeProperty('cursor');
 
-    this.leftSide.style.removeProperty('user-select');
-    this.leftSide.style.removeProperty('pointer-events');
+      this.leftSide.style.removeProperty('user-select');
+      this.leftSide.style.removeProperty('pointer-events');
 
-    this.rightSide.style.removeProperty('user-select');
-    this.rightSide.style.removeProperty('pointer-events');
+      this.rightSide.style.removeProperty('user-select');
+      this.rightSide.style.removeProperty('pointer-events');
 
-    // Remove the handlers of `mousemove` and `mouseup`
-    document.removeEventListener('mousemove', this.mouseMoveHandler);
-    document.removeEventListener('mouseup', this.mouseUpHandler);
+      // Remove the handlers of `mousemove` and `mouseup`
+      document.removeEventListener('mousemove', this.mouseMoveHandler);
+      document.removeEventListener('mouseup', this.mouseUpHandler);
     }
   },
   components: {
@@ -119,7 +115,7 @@ export default {
     card
   },
   created() {
-    
+
   },
   mounted() {
     this.resizer = this.$refs.dragMe
