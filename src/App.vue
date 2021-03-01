@@ -2,6 +2,8 @@
   <div id="app">
     <!-- <h3 style="margin-top:2px">Integration Processors Viz</h3> -->
     <div style="width:50%;border:2px;">
+      <stats></stats>
+      <action></action>
       <editor :content="displayDataStr"></editor>
     </div>
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
@@ -16,6 +18,8 @@
 <script>
 import editor from './components/editor.vue'
 import card from './components/card.vue'
+import Stats from "@/components/stats";
+import Action from "@/components/action";
 
 function compare(a, b) {
   if (a.run < b.run) {
@@ -111,6 +115,8 @@ export default {
     }
   },
   components: {
+    Action,
+    Stats,
     editor,
     card
   },
