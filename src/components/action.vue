@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="radio-toggles">
-      <input type="radio" id="option-1" name="radio-options">
+      <input type="radio" id="option-1" name="radio-options" value="CONNECTOR" v-model="toggle" @change="updateOnToggle">
       <label for="option-1" class="left-label">Connector</label>
-      <input type="radio" id="option-2" name="radio-options" checked>
+      <input type="radio" id="option-2" name="radio-options" value="PROCESSOR" v-model="toggle" @change="updateOnToggle">
       <label for="option-2" class="right-label">Processor</label>
       <div class="slide-item"></div>
     </div>
@@ -12,7 +12,19 @@
 
 <script>
 export default {
-  name: "action"
+  name: "action",
+  data: function () {
+    return {
+      toggle: 'CONNECTOR'
+    }
+  },
+  computed: {
+  },
+  methods: {
+    updateOnToggle: function () {
+      this.$emit('toggled', this.toggle)
+    }
+  }
 }
 </script>
 

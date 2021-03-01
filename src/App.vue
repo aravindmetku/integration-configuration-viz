@@ -3,11 +3,11 @@
     <!-- <h3 style="margin-top:2px">Integration Processors Viz</h3> -->
     <div style="width:50%;border:2px;">
       <stats></stats>
-      <action></action>
+      <action @toggled="onToggled"></action>
       <editor :content="displayDataStr"></editor>
     </div>
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
-    <div style="flex: 1 1 0%">
+    <div style="flex: 1 1 0">
       Right
       <card v-for="p in displayData" v-bind:key="p.processorName" :processor="p"></card>
     </div>
@@ -36,10 +36,10 @@ export default {
   data: function () {
     return {
       value: 'console.log("Hello, World");',
-      displayDataStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
-      item: {
-        content: 'console.log(here is a console log)'
-      },
+      codeDisplayStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
+      processorDisplayStr: '',
+      selectedProcessorIndex: 0,
+      selectedEditorDisplayToggle: '',
       cmOptions: {
         tabSize: 2,
         mode: 'javascript',
@@ -57,23 +57,34 @@ export default {
   computed: {
     displayData: function () {
       try {
-        console.log(JSON.parse(this.displayDataStr).processors.sort(compare))
-        return JSON.parse(this.displayDataStr).processors.sort(compare)
+        console.log(JSON.parse(this.codeDisplayStr).processors.sort(compare))
+        return JSON.parse(this.codeDisplayStr).processors.sort(compare)
       } catch (e) {
         return []
+      }
+    },
+    displayDataStr: function () {
+      console.log('selected toggle option', this.selectedEditorDisplayToggle, this.selectedProcessorIndex);
+      if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
+        return this.codeDisplayStr;
+      } else {
+        return JSON.stringify(this.displayData[this.selectedProcessorIndex]);
       }
     }
   },
   methods: {
+    onToggled: function (val) {
+      this.selectedEditorDisplayToggle = val;
+    },
     updateSource(value) {
       console.log('update the source now');
       const current = [...this.displayData];
       const updated = current.findIndex(p => p.processorName === value.processorName);
       current[updated] = value;
 
-      let parse = JSON.parse(this.displayDataStr);
+      let parse = JSON.parse(this.codeDisplayStr);
       parse.processors = current;
-      this.displayDataStr = JSON.stringify(parse);
+      this.codeDisplayStr = JSON.stringify(parse);
     },
     mouseDownHandler(e) {
       // Get the current mouse position
