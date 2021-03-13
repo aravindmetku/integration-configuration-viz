@@ -2,9 +2,11 @@
   <div id="app">
     <!-- <h3 style="margin-top:2px">Integration Processors Viz</h3> -->
     <div style="width:50%;border:2px;">
-      <stats></stats>
+      <stats :processorsData="displayData"></stats>
       <action @toggled="onToggled"></action>
-      <editor :content="displayDataStr"></editor>
+      <editor :content="displayDataStr"
+              @updated="updatedContent"
+      ></editor>
     </div>
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
     <div style="flex: 1 1 0">
@@ -74,6 +76,19 @@ export default {
     }
   },
   methods: {
+    updatedContent(val) {
+      console.log('code is updated')
+      if(this.selectedEditorDisplayToggle === 'PROCESSOR') {
+        const current = [...this.displayData];
+        current[this.selectedProcessorIndex] = JSON.parse(val);
+        let parse = JSON.parse(this.codeDisplayStr);
+        console.log('line 85 the parse is ', parse)
+        parse.processors = current;
+        this.codeDisplayStr = JSON.stringify(parse);
+      } else {
+        this.codeDisplayStr = val;
+      }
+    },
     onToggled: function (val) {
       this.selectedEditorDisplayToggle = val;
     },

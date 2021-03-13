@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="update">save</button>
     <div class="processor">
       <codemirror style="text-align:left" ref="myCm" v-model="content" :options="codeMirrorOptions"></codemirror>
     </div>
@@ -47,6 +48,9 @@ export default {
     }
   },
   methods: {
+    update() {
+      this.$emit('updated', this.content);
+    },
     onError() {
       console.log('error')
     },
