@@ -59,7 +59,7 @@ export default {
   computed: {
     displayData: function () {
       try {
-        console.log(JSON.parse(this.codeDisplayStr).processors.sort(compare))
+        // console.log(JSON.parse(this.codeDisplayStr).processors.sort(compare))
         return JSON.parse(this.codeDisplayStr).processors.sort(compare)
       } catch (e) {
         return []
@@ -77,12 +77,10 @@ export default {
   },
   methods: {
     updatedContent(val) {
-      console.log('code is updated')
       if(this.selectedEditorDisplayToggle === 'PROCESSOR') {
         const current = [...this.displayData];
         current[this.selectedProcessorIndex] = JSON.parse(val);
         let parse = JSON.parse(this.codeDisplayStr);
-        console.log('line 85 the parse is ', parse)
         parse.processors = current;
         this.codeDisplayStr = JSON.stringify(parse);
       } else {

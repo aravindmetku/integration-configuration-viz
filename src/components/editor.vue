@@ -1,8 +1,10 @@
 <template>
   <div>
-    <button @click="update">save</button>
     <div class="processor">
-      <codemirror style="text-align:left" ref="myCm" v-model="content" :options="codeMirrorOptions"></codemirror>
+      <codemirror style="text-align:left" ref="myCm" 
+      v-model="content" 
+      @input="update"
+      :options="codeMirrorOptions"></codemirror>
     </div>
   </div>
 </template>
@@ -48,8 +50,9 @@ export default {
     }
   },
   methods: {
-    update() {
-      this.$emit('updated', this.content);
+    update(val) {
+      console.log('inside update input event')
+      this.$emit('updated', val);
     },
     onError() {
       console.log('error')
