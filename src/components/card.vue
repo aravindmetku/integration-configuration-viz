@@ -1,5 +1,5 @@
 <template>
-  <div class="accordion" id="myAccordion">
+  <div @click="clicked" class="accordion" id="myAccordion">
     <div class="card processor-card">
       <div class="card-header" id="headingOne">
         <h2 class="mb-0 processor-card-header">
@@ -23,7 +23,11 @@
 export default {
   name: 'card',
   computed: {},
-  methods: {},
+  methods: {
+    clicked() {
+      this.$emit('click')
+    }
+  },
   props: {
     processor: {
       run: Number,

@@ -11,7 +11,7 @@
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
     <div style="flex: 1 1 0">
       Right
-      <card v-for="p in displayData" v-bind:key="p.processorName" :processor="p"></card>
+      <card @click="processorClicked(p, idx)" v-for="(p, idx) in displayData" v-bind:key="p.processorName" :processor="p"></card>
     </div>
   </div>
 </template>
@@ -137,6 +137,9 @@ export default {
       // Remove the handlers of `mousemove` and `mouseup`
       document.removeEventListener('mousemove', this.mouseMoveHandler);
       document.removeEventListener('mouseup', this.mouseUpHandler);
+    },
+    processorClicked(processor, processorIndex) {
+      this.selectedProcessorIndex = processorIndex;
     }
   },
   components: {
