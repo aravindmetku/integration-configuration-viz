@@ -39,7 +39,7 @@ export default {
       codeDisplayStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
       processorDisplayStr: '',
       selectedProcessorIndex: 0,
-      selectedEditorDisplayToggle: '',
+      selectedEditorDisplayToggle: 'CONNECTOR',
       cmOptions: {
         tabSize: 2,
         mode: 'javascript',
@@ -66,9 +66,10 @@ export default {
     displayDataStr: function () {
       console.log('selected toggle option', this.selectedEditorDisplayToggle, this.selectedProcessorIndex);
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
-        return this.codeDisplayStr;
+        return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else {
-        return JSON.stringify(this.displayData[this.selectedProcessorIndex]);
+        const processors = JSON.parse(this.codeDisplayStr).processors;
+        return JSON.stringify(processors[this.selectedProcessorIndex], null, 2);
       }
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="processor">
-      <codemirror style="text-align:left" ref="myCm" v-model="this.content" :options="codeMirrorOptions"></codemirror>
+      <codemirror style="text-align:left" ref="myCm" v-model="content" :options="codeMirrorOptions"></codemirror>
     </div>
   </div>
 </template>
