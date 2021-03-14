@@ -1,7 +1,9 @@
 <template>
   <div>
     run - {{data[0]}}
-    <card @click="processorClicked(p.pr, p.globalIdx)" v-for="(p, idx) in data[1]" v-bind:key="idx" :processor="p.pr"></card>
+    <div class="container">
+      <card @click="processorClicked(p.pr, p.globalIdx)" v-for="(p, idx) in data[1]" v-bind:key="idx" :processor="p.pr"></card>
+    </div>
   </div>
 </template>
 
@@ -29,4 +31,8 @@ export default {
 </script>
 
 <style>
+ .container {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+ }
 </style>

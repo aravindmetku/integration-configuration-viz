@@ -1,5 +1,5 @@
 <template>
-  <div @click="clicked" class="accordion" id="myAccordion">
+  <div @click="clicked" id="myAccordion" :style="{'background-color':bgColor}">
     <div class="card processor-card">
       <div class="card-header" id="headingOne">
         <h2 class="mb-0 processor-card-header">
@@ -22,7 +22,20 @@
 
 export default {
   name: 'card',
-  computed: {},
+  computed: {
+    bgColor: function() {
+    switch(this.processor.processorType) {
+      case 'inboundFactSheet' : return 'red';
+      case 'inboundRelation' : return 'orange';
+      case 'inboundSubscription' : return 'blue';
+      case 'inboundDocument' : return 'yellow';
+      case 'inboundTag' : return 'violet';
+      case 'inboundMetrics' : return 'indigo';
+      case 'inboundImpact' : return 'green';
+      default : return 'white';
+    }
+    }
+  },
   methods: {
     clicked() {
       this.$emit('click')
@@ -52,9 +65,5 @@ export default {
 .processor-card-header {
   background-color: black;
   color: blanchedalmond;
-}
-
-.processor-card-body {
-
 }
 </style>
