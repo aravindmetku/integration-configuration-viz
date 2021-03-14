@@ -1,6 +1,6 @@
 <template>
-  <div>
-    run - {{data[0]}}
+  <div class="wrapperContainer">
+    <h5 class="header">{{data[0]}}</h5>
     <div class="container">
       <card @click="processorClicked(p.pr, p.globalIdx)" v-for="(p, idx) in data[1]" v-bind:key="idx" :processor="p.pr"></card>
     </div>
@@ -31,6 +31,15 @@ export default {
 </script>
 
 <style>
+  .wrapperContainer {
+    border: 1px solid lightgrey;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 6px;
+  }
+  .header {
+    background-color: lightblue
+  }
  .container {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;

@@ -1,20 +1,6 @@
 <template>
-  <div @click="clicked" id="myAccordion" :style="{'background-color':bgColor}">
-    <div class="card processor-card">
-      <div class="card-header" id="headingOne">
-        <h2 class="mb-0 processor-card-header">
-          <button type="button" data-toggle="collapse" class="processor-card-header" data-target="#collapseOne">Processor Run :
-            {{ processor.run }}
-          </button>
-        </h2>
-      </div>
-      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#myAccordion">
-        <div class="card-body">
-          <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure of web
-            pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
-        </div>
-      </div>
-    </div>
+  <div @click="clicked" class="processor-card" :style="{'background-color':bgColor}">
+    <h6>{{processor.processorName}}</h6>
   </div>
 </template>
 
@@ -57,13 +43,9 @@ export default {
 
 <style>
 .processor-card {
-  margin: 2vw;
-  height: 8vh;
-  background-color: black;
+  padding: 20px;
+  border-radius: 6px;
+  margin: 3px;
 }
 
-.processor-card-header {
-  background-color: black;
-  color: blanchedalmond;
-}
 </style>
