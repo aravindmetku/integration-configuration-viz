@@ -10,8 +10,8 @@
     </div>
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
     <div style="flex: 1 1 0">
-      Right
-      <card @click="processorClicked(p, idx)" v-for="(p, idx) in displayData" v-bind:key="p.processorName" :processor="p"></card>
+      <cardWrapper :data="pr" @click="processorClicked" 
+      v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
     </div>
   </div>
 </template>
@@ -19,9 +19,9 @@
 
 <script>
 import editor from './components/editor.vue'
-import card from './components/card.vue'
 import Stats from "@/components/stats";
 import Action from "@/components/action";
+import cardWrapper from "@/components/card-wrapper"
 
 function compare(a, b) {
   if (a.run < b.run) {
@@ -37,7 +37,6 @@ export default {
   name: 'App',
   data: function () {
     return {
-      value: 'console.log("Hello, World");',
       codeDisplayStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
       processorDisplayStr: '',
       selectedProcessorIndex: 0,
@@ -59,22 +58,31 @@ export default {
   computed: {
     displayData: function () {
       try {
-        // console.log(JSON.parse(this.codeDisplayStr).processors.sort(compare))
         return JSON.parse(this.codeDisplayStr).processors.sort(compare)
       } catch (e) {
         return []
       }
     },
     displayDataStr: function () {
-      console.log('selected toggle option', this.selectedEditorDisplayToggle, this.selectedProcessorIndex);
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else {
         const processors = JSON.parse(this.codeDisplayStr).processors;
         return JSON.stringify(processors[this.selectedProcessorIndex], null, 2);
       }
+    },
+    groupedProcessors: function() {
+      const v = this.displayData.reduce((acc,curr,i)=>{
+        if (!acc[curr.run]) {
+          acc[curr.run] = []
+        }
+        acc[curr.run].push({pr: curr, globalIdx: i});
+        return acc;
+      },{})
+      console.log('accumulator, ',v)
+      return Object.entries(v);
     }
-  },
+    },
   methods: {
     updatedContent(val) {
       if(this.selectedEditorDisplayToggle === 'PROCESSOR') {
@@ -138,15 +146,15 @@ export default {
       document.removeEventListener('mousemove', this.mouseMoveHandler);
       document.removeEventListener('mouseup', this.mouseUpHandler);
     },
-    processorClicked(processor, processorIndex) {
-      this.selectedProcessorIndex = processorIndex;
+    processorClicked(event) {
+      this.selectedProcessorIndex = event.idx;
     }
   },
   components: {
     Action,
     Stats,
     editor,
-    card
+    cardWrapper
   },
   created() {
 
