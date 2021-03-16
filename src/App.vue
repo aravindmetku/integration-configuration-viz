@@ -67,8 +67,7 @@ export default {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else {
-        const processors = JSON.parse(this.codeDisplayStr).processors;
-        return JSON.stringify(processors[this.selectedProcessorIndex], null, 2);
+        return JSON.stringify(this.displayData[this.selectedProcessorIndex], null, 2);
       }
     },
     groupedProcessors: function() {
@@ -98,16 +97,7 @@ export default {
     onToggled: function (val) {
       this.selectedEditorDisplayToggle = val;
     },
-    updateSource(value) {
-      console.log('update the source now');
-      const current = [...this.displayData];
-      const updated = current.findIndex(p => p.processorName === value.processorName);
-      current[updated] = value;
 
-      let parse = JSON.parse(this.codeDisplayStr);
-      parse.processors = current;
-      this.codeDisplayStr = JSON.stringify(parse);
-    },
     mouseDownHandler(e) {
       // Get the current mouse position
       this.x = e.clientX;
