@@ -46,6 +46,11 @@ export default {
   padding: 20px;
   border-radius: 6px;
   margin: 3px;
+  cursor: pointer;
+}
+
+.processor-card:hover {
+  transform: scale(1.04);
 }
 
 </style>
