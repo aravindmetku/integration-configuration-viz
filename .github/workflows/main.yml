@@ -32,4 +32,3 @@ jobs:
           manifest-path: ${{ env.LEANIX_MANIFEST_PATH }}
           stage: ${{ env.STAGE }}
           version: ${{ env.VERSION }}
-          version: ${{ env.VERSION }}
