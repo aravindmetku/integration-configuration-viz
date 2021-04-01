@@ -30,5 +30,6 @@ jobs:
           host: ${{ env.HOST }}
           api-token: ${{ secrets.LEANIX_API_TOKEN }}
           manifest-path: ${{ env.LEANIX_MANIFEST_PATH }}
+          dependency-manager: ${{ env.DEPENDENCY_MANAGER }}
           stage: ${{ env.STAGE }}
           version: ${{ env.VERSION }}
