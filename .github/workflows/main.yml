@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: LeanIX Microservice Intelligence
-        uses: leanix/github-actions-store-leanix-plugin@1.1.0
+        uses: leanix/github-actions-store-leanix-plugin@1.2.0
         id: LIXMID
         with:
           host: ${{ env.HOST }}
