@@ -20,8 +20,8 @@ jobs:
     name: viz-${{ github.run_number }}
     runs-on: ubuntu-latest
     steps:
-      - name: Microservice Intelligence Tracker
-        uses: codeclimate/velocity-deploy-action@master
+      - name: LeanIX Microservice Intelligence
+        uses: leanix/github-actions-store-leanix-plugin@1.0.0
         id: LIXMID
         with:
           host: ${{ env.HOST }}
