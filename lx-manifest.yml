@@ -1,0 +1,8 @@
+id: cicd-gh-action
+name: cicd-gh-action
+description: this is a test manifest file to test published action
+self: https://github.com/leanix/integration-configuration-viz/blob/test/lx-manifest.yml
+owner: christoph.walpert@leanix.net
+links:
+  - name: vcs
+    url: https://github.com/aravindmetku/integration-configuration-viz
