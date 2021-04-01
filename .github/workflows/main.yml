@@ -14,6 +14,7 @@ env:
   STAGE: test
   HOST: app.leanix.net
   DEPENDENCY_MANAGER: NPM
+  VERSION: 1
 
 jobs:
   tracking:
@@ -30,4 +31,5 @@ jobs:
           api-token: ${{ secrets.LEANIX_API_TOKEN }}
           manifest-path: ${{ env.LEANIX_MANIFEST_PATH }}
           stage: ${{ env.STAGE }}
+          version: ${{ env.VERSION }}
           version: ${{ env.VERSION }}
