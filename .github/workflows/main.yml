@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: LeanIX Microservice Intelligence
-        uses: leanix/github-actions-store-leanix-plugin@1.0.0
+        uses: leanix/github-actions-store-leanix-plugin@1.1.0
         id: LIXMID
         with:
           host: ${{ env.HOST }}
