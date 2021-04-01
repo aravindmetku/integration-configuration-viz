@@ -21,10 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Microservice Intelligence Tracker
-          uses: codeclimate/velocity-deploy-action@master
-          with:
-            host: ${{ env.HOST }}
-            api-token: ${{ secrets.LEANIX_API_TOKEN }}
-            manifest-path: ${{ env.LEANIX_MANIFEST_PATH }}
-            stage: ${{ env.STAGE }}
-            version: ${{ env.VERSION }}
+        uses: codeclimate/velocity-deploy-action@master
+        id: LIXMID
+        with:
+          host: ${{ env.HOST }}
+          api-token: ${{ secrets.LEANIX_API_TOKEN }}
+          manifest-path: ${{ env.LEANIX_MANIFEST_PATH }}
+          stage: ${{ env.STAGE }}
+          version: ${{ env.VERSION }}
