@@ -1,6 +1,6 @@
 <template>
   <div class="wrapperContainer">
-    <h5 class="header">{{data[0]}}</h5>
+    <h5 class="header">Processor Execution Stage - {{data[0]}}</h5>
     <div class="container">
       <card @click="processorClicked(p.pr, p.globalIdx)" v-for="(p, idx) in data[1]" v-bind:key="idx" :processor="p.pr"></card>
     </div>

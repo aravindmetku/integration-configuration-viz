@@ -138,6 +138,7 @@ export default {
     },
     processorClicked(event) {
       this.selectedProcessorIndex = event.idx;
+      this.selectedEditorDisplayToggle = 'PROCESSOR';
     }
   },
   components: {

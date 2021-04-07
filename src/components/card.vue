@@ -1,6 +1,6 @@
 <template>
   <div @click="clicked" class="processor-card" :style="{'background-color':bgColor}">
-    <h6>{{processor.processorName}}</h6>
+    <h6>{{cardText}}</h6>
   </div>
 </template>
 
@@ -9,17 +9,28 @@
 export default {
   name: 'card',
   computed: {
-    bgColor: function() {
-    switch(this.processor.processorType) {
-      case 'inboundFactSheet' : return 'red';
-      case 'inboundRelation' : return 'orange';
-      case 'inboundSubscription' : return 'blue';
-      case 'inboundDocument' : return 'yellow';
-      case 'inboundTag' : return 'violet';
-      case 'inboundMetrics' : return 'indigo';
-      case 'inboundImpact' : return 'green';
-      default : return 'white';
-    }
+    cardText: function() {
+      return this.processor.processorDescription ?? this.processor.processorName
+    },
+    bgColor: function () {
+      switch (this.processor.processorType) {
+        case 'inboundFactSheet' :
+          return '#00A399';
+        case 'inboundRelation' :
+          return '#0F7EB5';
+        case 'inboundSubscription' :
+          return '#18AECE';
+        case 'inboundDocument' :
+          return '#33CC58';
+        case 'inboundTag' :
+          return '#916B50';
+        case 'inboundMetrics' :
+          return '#2889FF';
+        case 'inboundImpact' :
+          return '#9755CD';
+        default :
+          return '#FAD71E';
+      }
     }
   },
   methods: {
