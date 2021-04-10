@@ -81,7 +81,7 @@ export default {
       } else {
         console.log('display data str', this.displayErrorData)
         const processorDataToDisplay = {
-          errors: 'get',
+          errors: this.displayErrorData()[this.displayData[this.selectedProcessorIndex].processorName],
           processor: this.displayData[this.selectedProcessorIndex]
         }
         return JSON.stringify(processorDataToDisplay, null, 2);
