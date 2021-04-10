@@ -38,6 +38,18 @@ export default {
   data: function () {
     return {
       codeDisplayStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
+      errorDisplayStr: `{
+                            "results": null,
+                            "warnings": [
+                                {
+                                    "processor": {
+                                        "name": "Apps from Deployments",
+                                        "index": -1
+                                    },
+                                    "message": "Impacts does not support simulation mode. Skipping full sync deletion for impacts",
+                                    "category": "fullSyncDeletion",
+                                    "status": "WARNING"
+                                }]}`,
       processorDisplayStr: '',
       selectedProcessorIndex: 0,
       selectedEditorDisplayToggle: 'CONNECTOR',
@@ -67,7 +79,12 @@ export default {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else {
-        return JSON.stringify(this.displayData[this.selectedProcessorIndex], null, 2);
+        console.log('display data str', this.displayErrorData)
+        const processorDataToDisplay = {
+          errors: 'get',
+          processor: this.displayData[this.selectedProcessorIndex]
+        }
+        return JSON.stringify(processorDataToDisplay, null, 2);
       }
     },
     groupedProcessors: function() {
@@ -83,6 +100,19 @@ export default {
     }
     },
   methods: {
+      displayErrorData: function() {
+        try {
+          return JSON.parse(this.errorDisplayStr).warnings.reduce((acc, curr) => {
+                                             if(!acc[curr.processor.name]) {
+                                               acc[curr.processor.name] = []
+                                             }
+                                             acc[curr.processor.name].push(curr.message);
+                                             return acc;
+                                           }, {});
+        } catch (e) {
+          return []
+        }
+      },
     updatedContent(val) {
       if(this.selectedEditorDisplayToggle === 'PROCESSOR') {
         const current = [...this.displayData];
