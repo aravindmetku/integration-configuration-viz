@@ -91,13 +91,23 @@ export default {
     },
     displayDataStr: function () {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
-        return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
-      } else {
+        try {
+          return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
+        } catch (e) {
+          return '';
+        }
+      } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
         const p = {
           errors: displayErrorData(this.errorDisplayStr)[this.displayData[this.selectedProcessorIndex].processorName],
           processor: this.displayData[this.selectedProcessorIndex]
         }
         return JSON.stringify(p, null, 2);
+      } else {
+        try {
+          return JSON.stringify(JSON.parse(this.errorDisplayStr), null, 2)
+        } catch (e) {
+          return '';
+        }
       }
     },
     groupedProcessors: function () {
@@ -108,7 +118,6 @@ export default {
         acc[curr.run].push({pr: curr, globalIdx: i});
         return acc;
       }, {})
-      console.log('accumulator, ', v)
       return Object.entries(v);
     }
   },
@@ -120,8 +129,10 @@ export default {
         let parse = JSON.parse(this.codeDisplayStr);
         parse.processors = current;
         this.codeDisplayStr = JSON.stringify(parse);
-      } else {
+      } else if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         this.codeDisplayStr = val;
+      } else {
+        this.errorDisplayStr = val;
       }
     },
     onToggled: function (val) {
