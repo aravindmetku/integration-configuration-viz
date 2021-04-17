@@ -111,11 +111,12 @@ export default {
       }
     },
     groupedProcessors: function () {
+      const errors = displayErrorData(this.errorDisplayStr);
       const v = this.displayData.reduce((acc, curr, i) => {
         if (!acc[curr.run]) {
           acc[curr.run] = []
         }
-        acc[curr.run].push({pr: curr, globalIdx: i});
+        acc[curr.run].push({pr: curr, prErrors: errors[curr.processorName] ?? [], globalIdx: i});
         return acc;
       }, {})
       return Object.entries(v);

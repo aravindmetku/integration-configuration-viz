@@ -1,6 +1,6 @@
 <template>
-  <div @click="clicked" class="processor-card" :style="{'background-color':bgColor}">
-    <h6>{{cardText}}</h6>
+  <div @click="clicked" class="processor-card" :class="{'error': hasError}" :style="{'background-color':bgColor}">
+    <h6>{{ cardText }}</h6>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 export default {
   name: 'card',
   computed: {
-    cardText: function() {
+    cardText: function () {
       return this.processor.processorDescription ?? this.processor.processorName
     },
     bgColor: function () {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     clicked() {
-      this.$emit('click')
+      this.$emit('click');
     }
   },
   props: {
@@ -44,10 +44,10 @@ export default {
       processorDescription: String,
       processorName: String,
       processorType: String
-    }
+    },
+    hasError: Boolean
   },
   mounted() {
-    console.log('inside card vue the processors are ', this.$props)
   }
 }
 </script>
@@ -62,6 +62,24 @@ export default {
 
 .processor-card:hover {
   transform: scale(1.04);
+}
+
+.error {
+  border: 3px solid red;
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    border-color: white;
+  }
+}
+
+@-webkit-keyframes blink-animation {
+  to {
+    border-color: white;
+  }
 }
 
 </style>
