@@ -10,8 +10,8 @@
     </div>
     <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
     <div style="flex: 1 1 0">
-      <cardWrapper :data="pr" @click="processorClicked" 
-      v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
+      <cardWrapper :data="pr" @click="processorClicked"
+                   v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
     </div>
   </div>
 </template>
@@ -31,6 +31,20 @@ function compare(a, b) {
     return 1;
   }
   return 0;
+}
+
+function displayErrorData(errorDisplayStr) {
+  try {
+    return JSON.parse(errorDisplayStr).warnings.reduce((acc, curr) => {
+      if (!acc[curr.processor.name]) {
+        acc[curr.processor.name] = []
+      }
+      acc[curr.processor.name].push(curr.message);
+      return acc;
+    }, {});
+  } catch (e) {
+    return []
+  }
 }
 
 export default {
@@ -79,44 +93,30 @@ export default {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else {
-        console.log('display data str', this.displayErrorData)
-        const processorDataToDisplay = {
-          errors: this.displayErrorData()[this.displayData[this.selectedProcessorIndex].processorName],
+        const p = {
+          errors: displayErrorData(this.errorDisplayStr)[this.displayData[this.selectedProcessorIndex].processorName],
           processor: this.displayData[this.selectedProcessorIndex]
         }
-        return JSON.stringify(processorDataToDisplay, null, 2);
+        return JSON.stringify(p, null, 2);
       }
     },
-    groupedProcessors: function() {
-      const v = this.displayData.reduce((acc,curr,i)=>{
+    groupedProcessors: function () {
+      const v = this.displayData.reduce((acc, curr, i) => {
         if (!acc[curr.run]) {
           acc[curr.run] = []
         }
         acc[curr.run].push({pr: curr, globalIdx: i});
         return acc;
-      },{})
-      console.log('accumulator, ',v)
+      }, {})
+      console.log('accumulator, ', v)
       return Object.entries(v);
     }
-    },
+  },
   methods: {
-      displayErrorData: function() {
-        try {
-          return JSON.parse(this.errorDisplayStr).warnings.reduce((acc, curr) => {
-                                             if(!acc[curr.processor.name]) {
-                                               acc[curr.processor.name] = []
-                                             }
-                                             acc[curr.processor.name].push(curr.message);
-                                             return acc;
-                                           }, {});
-        } catch (e) {
-          return []
-        }
-      },
     updatedContent(val) {
-      if(this.selectedEditorDisplayToggle === 'PROCESSOR') {
+      if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
         const current = [...this.displayData];
-        current[this.selectedProcessorIndex] = JSON.parse(val);
+        current[this.selectedProcessorIndex] = JSON.parse(val).processor;
         let parse = JSON.parse(this.codeDisplayStr);
         parse.processors = current;
         this.codeDisplayStr = JSON.stringify(parse);
