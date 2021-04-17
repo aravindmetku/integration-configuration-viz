@@ -91,11 +91,7 @@ export default {
     },
     displayDataStr: function () {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
-        try {
-          return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
-        } catch (e) {
-          return '';
-        }
+        return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
         const p = {
           errors: displayErrorData(this.errorDisplayStr)[this.displayData[this.selectedProcessorIndex].processorName],
@@ -106,7 +102,7 @@ export default {
         try {
           return JSON.stringify(JSON.parse(this.errorDisplayStr), null, 2)
         } catch (e) {
-          return '';
+          return this.errorDisplayStr;
         }
       }
     },
