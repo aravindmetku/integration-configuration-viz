@@ -14,7 +14,7 @@ env:
   STAGE: test
   HOST: app.leanix.net
   DEPENDENCY_MANAGER: NPM
-  VERSION: 2
+  VERSION: 3
 
 jobs:
   tracking:
