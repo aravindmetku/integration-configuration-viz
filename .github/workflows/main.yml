@@ -11,10 +11,10 @@ on:
 env:
   ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
   LEANIX_MANIFEST_PATH: /lx-manifest.yml
-  STAGE: test
+  STAGE: production
   HOST: app.leanix.net
   DEPENDENCY_MANAGER: NPM
-  VERSION: 3
+  VERSION: 1
 
 jobs:
   tracking:
