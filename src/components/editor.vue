@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="processor">
-      <codemirror style="text-align:left" ref="myCm" 
+      <codemirror style="text-align:left" ref="myCm"
       v-model="content" 
       @input="update"
       :options="codeMirrorOptions"></codemirror>
@@ -11,6 +11,8 @@
 
 <script>
 import "codemirror/theme/idea.css"
+import "codemirror/theme/moxer.css"
+import "codemirror/theme/zenburn.css"
 import {codemirror} from 'vue-codemirror'
 
 require("codemirror/mode/javascript/javascript.js")
@@ -32,7 +34,8 @@ export default {
     }
   },
   props: {
-     content: String
+     content: String,
+     codeMirrorTheme: String
   },
   computed: {
     id() {
@@ -42,7 +45,7 @@ export default {
       return {
         tabSize: 2,
         mode: 'javascript',
-        theme: 'idea',
+        theme: this.codeMirrorTheme,
         lineNumbers: true,
         lineWraping: true,
         moveOnDrag: true
