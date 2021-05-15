@@ -5,6 +5,7 @@
       <stats :processorsData="displayData"></stats>
       <action @toggled="onToggled"></action>
       <editor :content="displayDataStr"
+              :codeMirrorTheme="codeMirrorTheme"
               @updated="updatedContent"
       ></editor>
     </div>
@@ -87,6 +88,15 @@ export default {
         return JSON.parse(this.codeDisplayStr).processors.sort(compare)
       } catch (e) {
         return []
+      }
+    },
+    codeMirrorTheme: function () {
+      if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
+        return 'idea'
+      } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
+        return 'moxer'
+      } else {
+        return 'zenburn'
       }
     },
     displayDataStr: function () {
