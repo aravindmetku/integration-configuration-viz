@@ -39,7 +39,7 @@ function displayErrorData(errorDisplayStr) {
       if (!acc[curr.processor.name]) {
         acc[curr.processor.name] = []
       }
-      acc[curr.processor.name].push(curr.message);
+      acc[curr.processor.name].push(curr?.detail?.message ?? curr.message);
       return acc;
     }, {});
   } catch (e) {
