@@ -5,6 +5,7 @@
 2. Click on 'Processor' to work with individual processor. Each processor type is **color-coded**.
 3. If you have the output of a integration API run, copy in 'Output' section to quickly visualise which processor have error.
 4. Click on the 'Processor' to get **specific errors for that processor**.
+5. After editing your processors directly copy updated connector from 'Connector' editor.
 
 ## Points to Remember
 1. Every processor should have unique name 
