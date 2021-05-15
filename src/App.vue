@@ -2,6 +2,8 @@
   <div id="app">
     <!-- <h3 style="margin-top:2px">Integration Processors Viz</h3> -->
     <div style="width:50%;border:2px;">
+      <a class="howitworks"
+         href="https://github.com/aravindmetku/integration-configuration-viz/blob/master/README.md#how-it-works">How it works?</a>
       <stats :processorsData="displayData"></stats>
       <action @toggled="onToggled"></action>
       <editor :content="displayDataStr"
@@ -218,6 +220,13 @@ export default {
   color: #2c3e50;
   margin-top: 1vh;
   display: flex
+}
+
+.howitworks {
+  display: flex;
+  flex-flow: row-reverse;
+  margin-right: 16px;
+  cursor: pointer;
 }
 
 .processorsContainer {

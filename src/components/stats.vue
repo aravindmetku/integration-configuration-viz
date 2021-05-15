@@ -1,8 +1,9 @@
 <template>
   <div class="flex-strip" style="background-color:#7942a8;height:4.5vh; margin: 2vh 1vw">
       <span class="purple-strip-border"
-            style="color:#fff; padding: 0.4vw; font-size:0.8rem; border-left: 0.05vw; border-color: #fff">Total Processors Count : {{processorsCount}}</span>
-    <span class="purple-strip-border" style="color:#fff; padding: 0.4vw; font-size:0.8rem"> Highest Run Index : {{highRun}} </span>
+            style="color:#fff; padding: 0.4vw; font-size:0.8rem; border-left: 0.05vw; border-color: #fff">Total Processors Count : {{ processorsCount }}</span>
+    <span class="purple-strip-border"
+          style="color:#fff; padding: 0.4vw; font-size:0.8rem"> Highest Run Index : {{ highRun }} </span>
   </div>
 </template>
 
@@ -11,15 +12,15 @@ export default {
   name: "stats",
   props: {
     processorsData: {
-    type: Array, 
-    required: true
+      type: Array,
+      required: true
     }
   },
   computed: {
-    processorsCount: function() {
+    processorsCount: function () {
       return this.processorsData?.length ?? 0;
     },
-    highRun: function() {
+    highRun: function () {
       return this.processorsData[this.processorsData.length - 1].run;
     }
   }

@@ -1,8 +1,14 @@
 <template>
   <div>
-    <button v-bind:class="[selectedBtn == 'CONNECTOR' ? 'activeBtn' : '']" class="act-btn connector-bg" @click="updateOnToggle('CONNECTOR')">Connector</button>
-    <button  v-bind:class="[selectedBtn == 'OUTPUT' ? 'activeBtn' : '']" class="act-btn output-bg" @click="updateOnToggle('OUTPUT')">Output</button>
-    <button  v-bind:class="[selectedBtn == 'PROCESSOR' ? 'activeBtn' : '']" class="act-btn processor-bg" @click="updateOnToggle('PROCESSOR')">Processor</button>
+    <button v-bind:class="[selectedBtn === 'CONNECTOR' ? 'activeBtn' : '']" class="act-btn connector-bg"
+            @click="updateOnToggle('CONNECTOR')">Connector
+    </button>
+    <button v-bind:class="[selectedBtn === 'OUTPUT' ? 'activeBtn' : '']" class="act-btn output-bg"
+            @click="updateOnToggle('OUTPUT')">Output
+    </button>
+    <button v-bind:class="[selectedBtn === 'PROCESSOR' ? 'activeBtn' : '']" class="act-btn processor-bg"
+            @click="updateOnToggle('PROCESSOR')">Processor
+    </button>
   </div>
 </template>
 
@@ -11,19 +17,22 @@ export default {
   name: "action",
   data: function () {
     return {
-      selectedBtn : 'CONNECTOR' 
+      selectedBtn: 'CONNECTOR'
     }
   },
   computed: {},
   methods: {
     updateOnToggle: function (val) {
-      switch(val) {
-        case 'CONNECTOR' : this.selectedBtn = 'CONNECTOR'
-                            break
-        case 'OUTPUT' : this.selectedBtn = 'OUTPUT'
-                        break
-        case 'PROCESSOR' : this.selectedBtn = 'PROCESSOR'
-                            break
+      switch (val) {
+        case 'CONNECTOR' :
+          this.selectedBtn = 'CONNECTOR'
+          break
+        case 'OUTPUT' :
+          this.selectedBtn = 'OUTPUT'
+          break
+        case 'PROCESSOR' :
+          this.selectedBtn = 'PROCESSOR'
+          break
       }
       this.$emit('toggled', val)
     }
@@ -61,10 +70,11 @@ export default {
 .user-action {
   background-color: #c60c7c; /* Green */
 }
+
 .activeBtn {
   /* border: 1px dashed #001327; */
   box-shadow: inset 2px 2px 4px black;
-  outline : none
+  outline: none
 }
 
 </style>
