@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <!-- <h3 style="margin-top:2px">Integration Processors Viz</h3> -->
-    <div style="width:50%;border:2px;">
-      <a class="howitworks"
-         href="https://github.com/aravindmetku/integration-configuration-viz/blob/master/README.md#how-it-works">How it works?</a>
-      <stats :processorsData="displayData"></stats>
-      <action @toggled="onToggled"></action>
-      <editor :content="displayDataStr"
-              :codeMirrorTheme="codeMirrorTheme"
-              @updated="updatedContent"
-      ></editor>
-    </div>
-    <div class="resizer" style="height:100vh; width:10px; background-color:#eaeaea" ref="dragMe"></div>
-    <div style="flex: 1 1 0">
-      <cardWrapper :data="pr" @click="processorClicked"
-                   v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
+    <app-bar></app-bar>
+    <div class="content">
+      <div style="width:50%;border:2px;">
+        <stats :processorsData="displayData"></stats>
+        <action @toggled="onToggled"></action>
+        <editor :content="displayDataStr"
+                :codeMirrorTheme="codeMirrorTheme"
+                @updated="updatedContent"
+        ></editor>
+      </div>
+      <div class="resizer" ref="dragMe"></div>
+      <div style="flex: 1 1 0">
+        <cardWrapper :data="pr" @click="processorClicked"
+                     v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ import editor from './components/editor.vue'
 import Stats from "@/components/stats";
 import Action from "@/components/action";
 import cardWrapper from "@/components/card-wrapper"
+import AppBar from "@/components/app-bar";
 
 function compare(a, b) {
   if (a.run < b.run) {
@@ -54,7 +55,7 @@ export default {
   name: 'App',
   data: function () {
     return {
-      codeDisplayStr: '{"connectorType": "LeanIX-BPM-Integration-Inbound","connectorId": "LeanIX-BPM-Integration-Inbound","connectorVersion": "1.0.0","processingDirection": "inbound","processingMode": "partial","readOnly": false,"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
+      codeDisplayStr: '{"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
       errorDisplayStr: `{
                             "results": null,
                             "warnings": [
@@ -192,6 +193,7 @@ export default {
     }
   },
   components: {
+    AppBar,
     Action,
     Stats,
     editor,
@@ -216,20 +218,21 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 1vh;
-  display: flex
-}
-
-.howitworks {
-  display: flex;
-  flex-flow: row-reverse;
-  margin-right: 16px;
-  cursor: pointer;
-}
-
-.processorsContainer {
   display: grid;
+  grid-template-rows: 50px auto;
 }
+
+.content {
+  display: flex;
+}
+
+.resizer {
+  height: 100vh;
+  width: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #eaeaea;
+}
+
 </style>

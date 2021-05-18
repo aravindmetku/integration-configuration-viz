@@ -77,15 +77,16 @@ export default {
 
 <style>
 .processor {
-  border: grey solid 1px;
-  padding: 0vw;
-  margin: 2vh 1vw;
+  padding: 20px;
+  margin: 20px 10px 20px 20px;
   resize: horizontal;
-  height: 99vh;
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow: inset 13px 13px 29px #e3e3e3,
+  inset -13px -13px 29px #ffffff;
 }
 
 .CodeMirror {
   height: 100vh !important;
-  overflow: auto !important;
 }
 </style>

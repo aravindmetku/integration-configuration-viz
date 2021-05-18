@@ -40,6 +40,7 @@ export default {
     padding: 5px;
     margin: 5px;
     border-radius: 6px;
+    text-align: center;
   }
   .header {
     background-color: lightblue
