@@ -35,7 +35,7 @@ export default {
 .flex-strip {
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
+  column-gap: 5%;
 }
 
 .stat-card {
@@ -47,8 +47,8 @@ export default {
   border-radius: 13px;
 
   background: #ffffff;
-  box-shadow:  13px 13px 27px #dbdbdb,
-  -13px -13px 27px #ffffff;
+  box-shadow:  14px 14px 31px #e3e3e3,
+  -14px -14px 31px #ffffff;
 }
 
 .stat-card-stat {
@@ -60,7 +60,7 @@ export default {
 .stat-card-title {
   border-bottom-left-radius: 13px;
   border-bottom-right-radius: 13px;
-  background-color: rgba(194, 194, 194, 0.27);
+  background-color: rgba(194, 194, 194, 0.1);
   font-weight: bold;
   padding-top: 10px;
   padding-bottom: 10px;

@@ -241,6 +241,7 @@ export default {
   padding: 20px;
   display: grid;
   grid-template-columns: 4fr 1fr;
+  column-gap: 5%;
   margin-top: 20px;
 }
 
