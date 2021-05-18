@@ -44,11 +44,12 @@ export default {
     codeMirrorOptions() {
       return {
         tabSize: 2,
-        mode: 'javascript',
+        mode: {name: "javascript", json: true},
         theme: this.codeMirrorTheme,
         lineNumbers: true,
-        lineWraping: true,
-        moveOnDrag: true
+        lineWrapping: true,
+        moveOnDrag: true,
+        extraKeys: {"Ctrl-Q": function(cm) { cm.foldCode(cm.getCursor()); }},
       }
     }
   },
