@@ -95,11 +95,11 @@ export default {
     },
     codeMirrorTheme: function () {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
-        return 'idea'
+        return 'idea';
       } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
-        return 'moxer'
+        return 'mdn-like';
       } else {
-        return 'zenburn'
+        return 'eclipse';
       }
     },
     displayDataStr: function () {

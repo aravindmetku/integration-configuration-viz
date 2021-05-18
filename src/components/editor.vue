@@ -11,8 +11,8 @@
 
 <script>
 import "codemirror/theme/idea.css"
-import "codemirror/theme/moxer.css"
-import "codemirror/theme/zenburn.css"
+import "codemirror/theme/mdn-like.css"
+import "codemirror/theme/eclipse.css"
 import {codemirror} from 'vue-codemirror'
 
 require("codemirror/mode/javascript/javascript.js")
