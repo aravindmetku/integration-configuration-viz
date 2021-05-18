@@ -1,9 +1,13 @@
 <template>
-  <div class="flex-strip" style="background-color:#7942a8;height:4.5vh; margin: 2vh 1vw">
-      <span class="purple-strip-border"
-            style="color:#fff; padding: 0.4vw; font-size:0.8rem; border-left: 0.05vw; border-color: #fff">Total Processors Count : {{ processorsCount }}</span>
-    <span class="purple-strip-border"
-          style="color:#fff; padding: 0.4vw; font-size:0.8rem"> Highest Run Index : {{ highRun }} </span>
+  <div class="flex-strip">
+    <div class="stat-card">
+      <h2 class="stat-card-stat">{{ processorsCount }}</h2>
+      <div class="stat-card-title">Total Processors Count</div>
+    </div>
+    <div class="stat-card">
+      <h2 class="stat-card-stat">{{ highRun }}</h2>
+      <div class="stat-card-title">Highest Run Number</div>
+    </div>
   </div>
 </template>
 
@@ -28,15 +32,38 @@ export default {
 </script>
 
 <style scoped>
-
-.purple-strip-border {
-  border-left: white solid 1px;
+.flex-strip {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
 }
 
-.flex-strip {
+.stat-card {
   display: flex;
-  justify-content: right;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
 
+  border-radius: 13px;
+
+  background: #ffffff;
+  box-shadow:  13px 13px 27px #dbdbdb,
+  -13px -13px 27px #ffffff;
+}
+
+.stat-card-stat {
+  font-size: 3em;
+  color: rgba(0,121,255,1);
+  padding-top: 10px;
+}
+
+.stat-card-title {
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
+  background-color: rgba(194, 194, 194, 0.27);
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 </style>

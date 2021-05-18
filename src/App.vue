@@ -3,8 +3,10 @@
     <app-bar></app-bar>
     <div class="content">
       <div style="width:50%;border:2px;">
-        <stats :processorsData="displayData"></stats>
-        <action @toggled="onToggled"></action>
+        <div class="stats-action">
+          <stats :processorsData="displayData"></stats>
+          <action @toggled="onToggled"></action>
+        </div>
         <editor :content="displayDataStr"
                 :codeMirrorTheme="codeMirrorTheme"
                 @updated="updatedContent"
@@ -233,6 +235,13 @@ export default {
   margin-left: 5px;
   margin-right: 5px;
   background-color: #eaeaea;
+}
+
+.stats-action {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  margin-top: 20px;
 }
 
 </style>
