@@ -59,7 +59,7 @@ export default {
   cursor: pointer;
   box-shadow: -7px -7px 20px 0px #fff9,
   -4px -4px 5px 0px #fff9,
-  7px 7px 20px 0px #0002,
+  7px 0px 20px 0px #0002,
   4px 4px 5px 0px #0001;
 }
 
