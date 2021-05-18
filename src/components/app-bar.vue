@@ -17,8 +17,8 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background: rgb(44,44,194);
-    background: linear-gradient(90deg, rgba(44,44,194,1) 0%, rgba(0,121,255,1) 100%);
+    background: rgb(44,118,194);
+    background: linear-gradient(90deg, rgba(44,118,194,1) 0%, rgba(0,121,255,1) 100%);
   }
 
   .title {
