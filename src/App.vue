@@ -234,6 +234,8 @@ export default {
   height: 100px;
   width: 10px;
   background-color: #eaeaea;
+  box-shadow: inset 7px 7px 14px #e3e3e3,
+  inset -7px -7px 14px #ffffff;
 }
 
 .stats-action {

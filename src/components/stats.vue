@@ -47,8 +47,8 @@ export default {
   border-radius: 13px;
 
   background: #ffffff;
-  box-shadow:  14px 14px 31px #e3e3e3,
-  -14px -14px 31px #ffffff;
+  box-shadow:  7px 7px 14px #e3e3e3,
+  -7px -7px 14px #ffffff;
 }
 
 .stat-card-stat {
