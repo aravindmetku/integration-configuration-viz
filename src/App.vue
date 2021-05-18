@@ -97,9 +97,9 @@ export default {
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         return 'idea';
       } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
-        return 'mdn-like';
-      } else {
         return 'eclipse';
+      } else {
+        return 'mdn-like';
       }
     },
     displayDataStr: function () {
