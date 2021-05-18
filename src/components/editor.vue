@@ -13,6 +13,7 @@
 import "codemirror/theme/idea.css"
 import "codemirror/theme/mdn-like.css"
 import "codemirror/theme/eclipse.css"
+import "codemirror/addon/fold/foldgutter.css"
 import {codemirror} from 'vue-codemirror'
 
 require("codemirror/mode/javascript/javascript.js")
@@ -49,6 +50,8 @@ export default {
         lineNumbers: true,
         lineWrapping: true,
         moveOnDrag: true,
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
         extraKeys: {"Ctrl-Q": function(cm) { cm.foldCode(cm.getCursor()); }},
       }
     }
