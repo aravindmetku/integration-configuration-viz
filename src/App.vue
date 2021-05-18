@@ -230,10 +230,9 @@ export default {
 }
 
 .resizer {
-  height: 100vh;
+  margin: auto 5px;
+  height: 100px;
   width: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
   background-color: #eaeaea;
 }
 
