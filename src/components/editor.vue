@@ -61,17 +61,6 @@ export default {
       console.log('inside update input event')
       this.$emit('updated', val);
     },
-    onError() {
-      console.log('error')
-    },
-    showEditor() {
-      this.$modal.show(`editor-${this.id}`)
-    },
-    onEditorClosed() {
-      // console.log('update the main displaystr now' );
-      // console.log(this.data)
-      this.$emit('input', this.data)
-    }
   },
   components: {
     codemirror
