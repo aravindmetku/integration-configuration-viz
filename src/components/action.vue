@@ -1,12 +1,12 @@
 <template>
   <div class="btn-group">
-    <button v-bind:class="[selectedBtn === 'CONNECTOR' ? 'activeBtn' : '']" class="act-btn"
+    <button v-bind:class="[selectedEditorDisplayToggle === 'CONNECTOR' ? 'activeBtn' : '']" class="act-btn"
             @click="updateOnToggle('CONNECTOR')">Connector
     </button>
-    <button v-bind:class="[selectedBtn === 'OUTPUT' ? 'activeBtn' : '']" class="act-btn"
+    <button v-bind:class="[selectedEditorDisplayToggle === 'OUTPUT' ? 'activeBtn' : '']" class="act-btn"
             @click="updateOnToggle('OUTPUT')">Output
     </button>
-    <button v-bind:class="[selectedBtn === 'PROCESSOR' ? 'activeBtn' : '']" class="act-btn"
+    <button v-bind:class="[selectedEditorDisplayToggle === 'PROCESSOR' ? 'activeBtn' : '']" class="act-btn"
             @click="updateOnToggle('PROCESSOR')">Processor
     </button>
   </div>
@@ -17,15 +17,16 @@ export default {
   name: "action",
   data: function () {
     return {
-      selectedBtn: 'CONNECTOR'
     }
   },
   computed: {},
   methods: {
     updateOnToggle: function (val) {
-      this.selectedBtn = val;
       this.$emit('toggled', val)
     }
+  },
+  props: {
+    selectedEditorDisplayToggle: String
   }
 }
 </script>

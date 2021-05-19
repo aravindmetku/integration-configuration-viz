@@ -5,7 +5,7 @@
       <div style="width:50%;border:2px;">
         <div class="stats-action">
           <stats :processorsData="displayData"></stats>
-          <action @toggled="onToggled"></action>
+          <action :selectedEditorDisplayToggle="selectedEditorDisplayToggle" @toggled="onToggled"></action>
         </div>
         <editor :content="displayDataStr"
                 :codeMirrorTheme="codeMirrorTheme"
