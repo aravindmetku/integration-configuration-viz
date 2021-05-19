@@ -1,5 +1,5 @@
 <template>
-  <div @click="clicked" class="processor-card" :class="{'error': hasError}" :style="{'background-color':bgColor}">
+  <div @click="clicked" class="processor-card" :class="{'error': hasError}" :style="{'border-bottom':`solid 6px ${bgColor}`}">
     <h6>{{ cardText }}</h6>
   </div>
 </template>
@@ -54,20 +54,44 @@ export default {
 
 <style>
 .processor-card {
-  padding: 20px;
-  border-radius: 6px;
-  margin: 3px;
+  padding: 10px;
+  margin: 5px;
   cursor: pointer;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 0.5);
+
+  border-radius: 8px;
+  background: #f5f5f5;
+  box-shadow:  9px 9px 19px #d7d7d7,
+  -9px -9px 19px #ffffff;
 }
 
 .processor-card:hover {
-  transform: scale(1.04);
+  animation: shadow-fadein 0.5s ease-in both;
+}
+
+@keyframes shadow-fadein {
+  0% {
+    background: linear-gradient(180deg, #dadada, #ffffff);
+  }
+  33% {
+    background: linear-gradient(165deg, #dadada, #ffffff);
+  }
+  55% {
+    background: linear-gradient(155deg, #dadada, #ffffff);
+  }
+  65% {
+    background: linear-gradient(140deg, #dadada, #ffffff);
+  }
+  100% {
+    background: linear-gradient(145deg, #dadada, #ffffff);
+  }
 }
 
 .error {
-  border: 3px solid red;
-  animation: blink-animation 1s steps(5, start) infinite;
-  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+  border: 1px dashed red;
+  /*animation: blink-animation 1s steps(5, start) infinite;*/
+  /*-webkit-animation: blink-animation 1s steps(5, start) infinite;*/
 }
 
 @keyframes blink-animation {

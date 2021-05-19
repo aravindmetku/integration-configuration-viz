@@ -37,7 +37,7 @@ export default {
 <style>
   .wrapperContainer {
     border: 1px solid lightgrey;
-    padding: 5px;
+    padding: 5px 5px 25px;
     margin-top: 30px;
     margin-left: 5px;
     margin-right: 10px;
@@ -54,6 +54,6 @@ export default {
   }
  .container {
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
+   grid-template-columns: repeat(3, 1fr);
  }
 </style>
