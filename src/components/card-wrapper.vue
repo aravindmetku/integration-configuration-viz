@@ -1,6 +1,6 @@
 <template>
   <div class="wrapperContainer">
-    <h5 class="header">Processor Execution Stage - {{data[0]}}</h5>
+    <h5 class="header">Execution Stage: <strong>{{data[0]}}</strong></h5>
     <div class="container">
       <card @click="processorClicked(p.pr, p.globalIdx)" v-for="(p, idx) in data[1]"
             v-bind:key="idx"
@@ -37,15 +37,23 @@ export default {
 <style>
   .wrapperContainer {
     border: 1px solid lightgrey;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 6px;
+    padding: 5px 5px 25px;
+    margin-top: 30px;
+    margin-left: 5px;
+    margin-right: 10px;
+    border-radius: 13px;
+    text-align: center;
+
+    background: #f3f1f1;
+    box-shadow: inset 7px 7px 14px #e3e3e3,
+    inset -7px -7px 14px #ffffff;
   }
   .header {
-    background-color: lightblue
+    color: rgba(128, 128, 128, 0.5);
+    font-size: 1.2em;
   }
  .container {
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
+   grid-template-columns: repeat(3, 1fr);
  }
 </style>

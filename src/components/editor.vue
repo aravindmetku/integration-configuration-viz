@@ -11,8 +11,9 @@
 
 <script>
 import "codemirror/theme/idea.css"
-import "codemirror/theme/moxer.css"
-import "codemirror/theme/zenburn.css"
+import "codemirror/theme/mdn-like.css"
+import "codemirror/theme/eclipse.css"
+import "codemirror/addon/fold/foldgutter.css"
 import {codemirror} from 'vue-codemirror'
 
 require("codemirror/mode/javascript/javascript.js")
@@ -44,11 +45,14 @@ export default {
     codeMirrorOptions() {
       return {
         tabSize: 2,
-        mode: 'javascript',
+        mode: {name: "javascript", json: true},
         theme: this.codeMirrorTheme,
         lineNumbers: true,
-        lineWraping: true,
-        moveOnDrag: true
+        lineWrapping: true,
+        moveOnDrag: true,
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+        extraKeys: {"Ctrl-Q": function(cm) { cm.foldCode(cm.getCursor()); }},
       }
     }
   },
@@ -57,17 +61,6 @@ export default {
       console.log('inside update input event')
       this.$emit('updated', val);
     },
-    onError() {
-      console.log('error')
-    },
-    showEditor() {
-      this.$modal.show(`editor-${this.id}`)
-    },
-    onEditorClosed() {
-      // console.log('update the main displaystr now' );
-      // console.log(this.data)
-      this.$emit('input', this.data)
-    }
   },
   components: {
     codemirror
@@ -77,15 +70,16 @@ export default {
 
 <style>
 .processor {
-  border: grey solid 1px;
-  padding: 0vw;
-  margin: 2vh 1vw;
+  padding: 20px;
+  margin: 20px 10px 20px 20px;
   resize: horizontal;
-  height: 99vh;
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow: inset 13px 13px 29px #e3e3e3,
+  inset -13px -13px 29px #ffffff;
 }
 
 .CodeMirror {
   height: 100vh !important;
-  overflow: auto !important;
 }
 </style>
