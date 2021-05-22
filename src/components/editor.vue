@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="processor">
-      <codemirror style="text-align:left" ref="myCm"
+      <codemirror class="code-mirror-pane" ref="myCm"
       v-model="content" 
       @input="update"
       :options="codeMirrorOptions"></codemirror>
@@ -11,6 +11,7 @@
 
 <script>
 import "codemirror/theme/idea.css"
+import "codemirror/theme/elegant.css"
 import "codemirror/theme/mdn-like.css"
 import "codemirror/theme/eclipse.css"
 import "codemirror/addon/fold/foldgutter.css"
@@ -74,9 +75,15 @@ export default {
   margin: 20px 10px 20px 20px;
   resize: horizontal;
   border-radius: 13px;
-  background: #ffffff;
+  background: #E1E4F0;
   box-shadow: inset 13px 13px 29px #e3e3e3,
   inset -13px -13px 29px #ffffff;
+}
+
+.code-mirror-pane {
+  box-shadow:  9px 9px 19px #d7d7d7,
+  -9px -9px 19px #ffffff;
+  text-align:left
 }
 
 .CodeMirror {

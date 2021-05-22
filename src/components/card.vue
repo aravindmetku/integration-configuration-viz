@@ -1,6 +1,14 @@
 <template>
-  <div @click="clicked" class="processor-card" :class="{'error': hasError}" :style="{'border-bottom':`solid 6px ${bgColor}`}">
+  <!-- <div @click="clicked" class="processor-card processor-type" :class="{'error': hasError}" :style="{'border-bottom':`solid 6px ${bgColor}`}">
     <h6>{{ cardText }}</h6>
+  </div> -->
+  <div class="processor-card">
+   <div @click="clicked" :class="{'error': hasError}">
+    <h6>{{ cardText }}</h6>
+  </div>
+  <div style="text-align:center">
+    <h3 class="processor-type" v-bind:class="processor.processorType"></h3>
+  </div>
   </div>
 </template>
 
@@ -11,26 +19,6 @@ export default {
   computed: {
     cardText: function () {
       return this.processor.processorDescription ?? this.processor.processorName
-    },
-    bgColor: function () {
-      switch (this.processor.processorType) {
-        case 'inboundFactSheet' :
-          return '#00A399';
-        case 'inboundRelation' :
-          return '#0F7EB5';
-        case 'inboundSubscription' :
-          return '#18AECE';
-        case 'inboundDocument' :
-          return '#33CC58';
-        case 'inboundTag' :
-          return '#916B50';
-        case 'inboundMetrics' :
-          return '#2889FF';
-        case 'inboundImpact' :
-          return '#9755CD';
-        default :
-          return '#FAD71E';
-      }
     }
   },
   methods: {
@@ -62,9 +50,25 @@ export default {
 
   border-radius: 8px;
   background: #f5f5f5;
-  box-shadow:  9px 9px 19px #d7d7d7,
-  -9px -9px 19px #ffffff;
+  box-shadow:  7px 7px 14px 0px #e3e3e3, 
+  -7px -7px 11px 5px #ffffff;
 }
+
+.processor-type {
+  color: #f5f5f5;
+  padding: 2px;
+  font-size: small;
+  border-radius: 5px;
+  width: 100%;
+  height: 10px;
+  transition: height 0.5s;
+  margin: 0
+}
+/* 
+.processor-type:hover {
+display: block;
+width: 100%;
+} */
 
 .processor-card:hover {
   animation: shadow-fadein 0.5s ease-in both;
@@ -89,11 +93,95 @@ export default {
 }
 
 .error {
-  border: 1px dashed red;
+  color : #A91E2C
+  /* border: 1px dashed red; */
   /*animation: blink-animation 1s steps(5, start) infinite;*/
   /*-webkit-animation: blink-animation 1s steps(5, start) infinite;*/
 }
 
+.inboundFactSheet {
+  background: #00A399;
+}
+
+.inboundFactSheet:hover {
+  height: 20px;
+}
+
+.inboundFactSheet:hover:after {
+  content: 'inboundFactSheet'
+}
+
+.inboundTag {
+  background: #916B50;
+}
+
+.inboundTag:hover {
+  height: 20px;
+}
+
+.inboundTag:hover:after {
+  content: 'inboundTag'
+}
+
+.inboundRelation {
+  background: #0F7EB5;
+}
+
+.inboundRelation:hover {
+  height: 20px;
+}
+
+.inboundRelation:hover:after {
+  content: 'inboundRelation'
+}
+
+.inboundSubscription {
+  background: #18AECE;
+}
+
+.inboundSubscription:hover {
+  height: 20px;
+}
+
+.inboundSubscription:hover:after {
+  content: 'inboundSubscription'
+}
+
+.inboundDocument {
+  background: #33CC58;
+}
+
+.inboundDocument:hover {
+  height: 20px;
+}
+
+.inboundDocument:hover:after {
+  content: 'inboundDocument'
+}
+
+.inboundMetrics {
+  background: #2889FF;
+}
+
+.inboundMetrics:hover {
+  height: 20px;
+}
+
+.inboundMetrics:hover:after {
+  content: 'inboundMetrics'
+}
+
+.inboundImpact {
+  background: #9755CD;
+}
+
+.inboundImpact:hover {
+  height: 20px;
+}
+
+.inboundImpact:hover:after {
+  content: 'inboundImpact'
+}
 @keyframes blink-animation {
   to {
     border-color: white;

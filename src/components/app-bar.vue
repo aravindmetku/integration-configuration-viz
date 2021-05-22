@@ -1,6 +1,6 @@
 <template>
  <div class="bar">
-   <h2 class="title"><strong>LeanIX</strong> Integration API Configuration Visualiser</h2>
+   <h2 class="title"> Integration API Configuration Visualiser</h2>
    <a class="howitworks"
       href="https://github.com/aravindmetku/integration-configuration-viz/blob/master/README.md#how-it-works">How it works?</a>
  </div>

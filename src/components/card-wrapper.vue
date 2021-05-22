@@ -44,7 +44,7 @@ export default {
     border-radius: 13px;
     text-align: center;
 
-    background: #f3f1f1;
+    background: #E1E4F0;
     box-shadow: inset 7px 7px 14px #e3e3e3,
     inset -7px -7px 14px #ffffff;
   }
