@@ -1,7 +1,4 @@
 <template>
-  <!-- <div @click="clicked" class="processor-card processor-type" :class="{'error': hasError}" :style="{'border-bottom':`solid 6px ${bgColor}`}">
-    <h6>{{ cardText }}</h6>
-  </div> -->
   <div class="processor-card">
    <div @click="clicked" :class="{'error': hasError}">
     <h6>{{ cardText }}</h6>
@@ -49,9 +46,9 @@ export default {
   color: rgba(0, 0, 0, 0.5);
 
   border-radius: 8px;
-  background: #f5f5f5;
-  box-shadow:  7px 7px 14px 0px #e3e3e3, 
-  -7px -7px 11px 5px #ffffff;
+  background: #e3e5ed;
+  box-shadow:  5px 5px 10px #bec1cd,
+  -5px -5px 10px #f6fbff;
 }
 
 .processor-type {
@@ -64,39 +61,15 @@ export default {
   transition: height 0.5s;
   margin: 0
 }
-/* 
-.processor-type:hover {
-display: block;
-width: 100%;
-} */
 
 .processor-card:hover {
-  animation: shadow-fadein 0.5s ease-in both;
-}
-
-@keyframes shadow-fadein {
-  0% {
-    background: linear-gradient(180deg, #dadada, #ffffff);
-  }
-  33% {
-    background: linear-gradient(165deg, #dadada, #ffffff);
-  }
-  55% {
-    background: linear-gradient(155deg, #dadada, #ffffff);
-  }
-  65% {
-    background: linear-gradient(140deg, #dadada, #ffffff);
-  }
-  100% {
-    background: linear-gradient(145deg, #dadada, #ffffff);
-  }
+  background: linear-gradient(145deg, #ccced5, #f3f5fe);
+  box-shadow:  5px 5px 10px #c5c7ce,
+  -5px -5px 10px #ffffff;
 }
 
 .error {
   color : #A91E2C
-  /* border: 1px dashed red; */
-  /*animation: blink-animation 1s steps(5, start) infinite;*/
-  /*-webkit-animation: blink-animation 1s steps(5, start) infinite;*/
 }
 
 .inboundFactSheet {
@@ -181,17 +154,6 @@ width: 100%;
 
 .inboundImpact:hover:after {
   content: 'inboundImpact'
-}
-@keyframes blink-animation {
-  to {
-    border-color: white;
-  }
-}
-
-@-webkit-keyframes blink-animation {
-  to {
-    border-color: white;
-  }
 }
 
 </style>

@@ -45,8 +45,8 @@ export default {
     text-align: center;
 
     background: #E1E4F0;
-    box-shadow: inset 7px 7px 14px #e3e3e3,
-    inset -7px -7px 14px #ffffff;
+    box-shadow: inset 5px 5px 10px #d4d6e2,
+    inset -5px -5px 10px #eff2fe;
   }
   .header {
     color: rgba(128, 128, 128, 0.5);

@@ -16,8 +16,7 @@
 export default {
   name: "action",
   data: function () {
-    return {
-    }
+    return {}
   },
   computed: {},
   methods: {
@@ -57,7 +56,7 @@ export default {
 .activeBtn {
   /* border: 1px dashed #001327; */
   animation: shadow-fadein 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  background: linear-gradient(0deg, #e6e6e6, rgba(44, 118, 194, 0.6));
+  background: rgba(116, 125, 136, .3);
   box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .5),
   -4px -4px 6px 0 rgba(116, 125, 136, .2),
   inset -4px -4px 6px 0 rgba(255, 255, 255, .5),

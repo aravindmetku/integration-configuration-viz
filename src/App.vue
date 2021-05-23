@@ -234,9 +234,10 @@ export default {
   margin: auto 5px;
   height: 100px;
   width: 10px;
-  background-color: #d4d4d4;
-  box-shadow: inset 7px 7px 14px #e3e3e3,
-  inset -7px -7px 14px #ffffff;
+  border-radius: 29px;
+  background: #E1E4F0;
+  box-shadow: inset 8px 8px 16px #d1d4df,
+  inset -8px -8px 16px #f1f4ff;
 }
 
 .stats-action {

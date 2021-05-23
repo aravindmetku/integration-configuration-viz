@@ -71,18 +71,16 @@ export default {
 
 <style>
 .processor {
-  padding: 20px;
+  padding: 15px;
   margin: 20px 10px 20px 20px;
   resize: horizontal;
   border-radius: 13px;
   background: #E1E4F0;
-  box-shadow: inset 13px 13px 29px #e3e3e3,
-  inset -13px -13px 29px #ffffff;
+  box-shadow: inset 5px 5px 10px #c4c6d1,
+  inset -5px -5px 10px #feffff;
 }
 
 .code-mirror-pane {
-  box-shadow:  9px 9px 19px #d7d7d7,
-  -9px -9px 19px #ffffff;
   text-align:left
 }
 
