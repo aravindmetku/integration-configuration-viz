@@ -1,6 +1,15 @@
 <template>
-  <div @click="clicked" class="processor-card" :class="{'error': hasError}" :style="{'border-bottom':`solid 6px ${bgColor}`}">
-    <h6>{{ cardText }}</h6>
+  <div class="processor-card">
+    <div class="card-text" @click="clicked" :class="{'error': hasError}">
+      <h6>{{ cardText }}</h6>
+    </div>
+    <div style="text-align:center">
+      <h3 class="processor-type" :style="{'background':bgColor,}" @mouseover="hover=true" @mouseleave="hover=false">
+        <span v-if="hover">
+        {{ processor.processorType }}
+        </span>
+      </h3>
+    </div>
   </div>
 </template>
 
@@ -8,6 +17,11 @@
 
 export default {
   name: 'card',
+  data: function () {
+    return {
+      hover: false
+    }
+  },
   computed: {
     cardText: function () {
       return this.processor.processorDescription ?? this.processor.processorName
@@ -61,49 +75,38 @@ export default {
   color: rgba(0, 0, 0, 0.5);
 
   border-radius: 8px;
-  background: #f5f5f5;
-  box-shadow:  9px 9px 19px #d7d7d7,
-  -9px -9px 19px #ffffff;
+  background: #e3e5ed;
+  box-shadow: 5px 5px 10px #bec1cd,
+  -5px -5px 10px #f6fbff;
+}
+
+.processor-type {
+  color: #f5f5f5;
+  padding: 2px;
+  font-size: small;
+  border-radius: 5px;
+  width: 100%;
+  height: 10px;
+  transition: height 0.5s;
+  margin: 0
+}
+
+.processor-type:hover {
+  height: 20px;
 }
 
 .processor-card:hover {
-  animation: shadow-fadein 0.5s ease-in both;
-}
-
-@keyframes shadow-fadein {
-  0% {
-    background: linear-gradient(180deg, #dadada, #ffffff);
-  }
-  33% {
-    background: linear-gradient(165deg, #dadada, #ffffff);
-  }
-  55% {
-    background: linear-gradient(155deg, #dadada, #ffffff);
-  }
-  65% {
-    background: linear-gradient(140deg, #dadada, #ffffff);
-  }
-  100% {
-    background: linear-gradient(145deg, #dadada, #ffffff);
-  }
+  background: linear-gradient(145deg, #ccced5, #f3f5fe);
+  box-shadow: 5px 5px 10px #c5c7ce,
+  -5px -5px 10px #ffffff;
 }
 
 .error {
-  border: 1px dashed red;
-  /*animation: blink-animation 1s steps(5, start) infinite;*/
-  /*-webkit-animation: blink-animation 1s steps(5, start) infinite;*/
+  color: #A91E2C
 }
 
-@keyframes blink-animation {
-  to {
-    border-color: white;
-  }
-}
-
-@-webkit-keyframes blink-animation {
-  to {
-    border-color: white;
-  }
+.card-text h6 {
+  font-size: 0.9em;
 }
 
 </style>

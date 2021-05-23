@@ -101,7 +101,7 @@ export default {
       } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
         return 'eclipse';
       } else {
-        return 'mdn-like';
+        return 'elegant';
       }
     },
     displayDataStr: function () {
@@ -217,7 +217,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Axiforma Regular', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -227,15 +227,17 @@ export default {
 
 .content {
   display: flex;
+  background-color: #F0F1F7;
 }
 
 .resizer {
   margin: auto 5px;
   height: 100px;
   width: 10px;
-  background-color: #eaeaea;
-  box-shadow: inset 7px 7px 14px #e3e3e3,
-  inset -7px -7px 14px #ffffff;
+  border-radius: 29px;
+  background: #E1E4F0;
+  box-shadow: inset 8px 8px 16px #d1d4df,
+  inset -8px -8px 16px #f1f4ff;
 }
 
 .stats-action {
@@ -246,4 +248,10 @@ export default {
   margin-top: 20px;
 }
 
+@font-face {
+  font-family: 'Axiforma Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Axiforma Regular'), url('assets/font/Kastelov  Axiforma Regular.woff') format('woff');
+  }
 </style>
