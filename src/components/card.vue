@@ -1,11 +1,15 @@
 <template>
   <div class="processor-card">
-   <div @click="clicked" :class="{'error': hasError}">
-    <h6>{{ cardText }}</h6>
-  </div>
-  <div style="text-align:center">
-    <h3 class="processor-type" v-bind:class="processor.processorType"></h3>
-  </div>
+    <div class="card-text" @click="clicked" :class="{'error': hasError}">
+      <h6>{{ cardText }}</h6>
+    </div>
+    <div style="text-align:center">
+      <h3 class="processor-type" :style="{'background':bgColor,}" @mouseover="hover=true" @mouseleave="hover=false">
+        <span v-if="hover">
+        {{ processor.processorType }}
+        </span>
+      </h3>
+    </div>
   </div>
 </template>
 
@@ -13,9 +17,34 @@
 
 export default {
   name: 'card',
+  data: function () {
+    return {
+      hover: false
+    }
+  },
   computed: {
     cardText: function () {
       return this.processor.processorDescription ?? this.processor.processorName
+    },
+    bgColor: function () {
+      switch (this.processor.processorType) {
+        case 'inboundFactSheet' :
+          return '#00A399';
+        case 'inboundRelation' :
+          return '#0F7EB5';
+        case 'inboundSubscription' :
+          return '#18AECE';
+        case 'inboundDocument' :
+          return '#33CC58';
+        case 'inboundTag' :
+          return '#916B50';
+        case 'inboundMetrics' :
+          return '#2889FF';
+        case 'inboundImpact' :
+          return '#9755CD';
+        default :
+          return '#FAD71E';
+      }
     }
   },
   methods: {
@@ -47,7 +76,7 @@ export default {
 
   border-radius: 8px;
   background: #e3e5ed;
-  box-shadow:  5px 5px 10px #bec1cd,
+  box-shadow: 5px 5px 10px #bec1cd,
   -5px -5px 10px #f6fbff;
 }
 
@@ -62,98 +91,22 @@ export default {
   margin: 0
 }
 
+.processor-type:hover {
+  height: 20px;
+}
+
 .processor-card:hover {
   background: linear-gradient(145deg, #ccced5, #f3f5fe);
-  box-shadow:  5px 5px 10px #c5c7ce,
+  box-shadow: 5px 5px 10px #c5c7ce,
   -5px -5px 10px #ffffff;
 }
 
 .error {
-  color : #A91E2C
+  color: #A91E2C
 }
 
-.inboundFactSheet {
-  background: #00A399;
-}
-
-.inboundFactSheet:hover {
-  height: 20px;
-}
-
-.inboundFactSheet:hover:after {
-  content: 'inboundFactSheet'
-}
-
-.inboundTag {
-  background: #916B50;
-}
-
-.inboundTag:hover {
-  height: 20px;
-}
-
-.inboundTag:hover:after {
-  content: 'inboundTag'
-}
-
-.inboundRelation {
-  background: #0F7EB5;
-}
-
-.inboundRelation:hover {
-  height: 20px;
-}
-
-.inboundRelation:hover:after {
-  content: 'inboundRelation'
-}
-
-.inboundSubscription {
-  background: #18AECE;
-}
-
-.inboundSubscription:hover {
-  height: 20px;
-}
-
-.inboundSubscription:hover:after {
-  content: 'inboundSubscription'
-}
-
-.inboundDocument {
-  background: #33CC58;
-}
-
-.inboundDocument:hover {
-  height: 20px;
-}
-
-.inboundDocument:hover:after {
-  content: 'inboundDocument'
-}
-
-.inboundMetrics {
-  background: #2889FF;
-}
-
-.inboundMetrics:hover {
-  height: 20px;
-}
-
-.inboundMetrics:hover:after {
-  content: 'inboundMetrics'
-}
-
-.inboundImpact {
-  background: #9755CD;
-}
-
-.inboundImpact:hover {
-  height: 20px;
-}
-
-.inboundImpact:hover:after {
-  content: 'inboundImpact'
+.card-text h6 {
+  font-size: 0.9em;
 }
 
 </style>
