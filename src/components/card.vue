@@ -72,6 +72,7 @@ export default {
   margin: 5px;
   cursor: pointer;
   line-height: 100%;
+  overflow-wrap: anywhere;
   color: rgba(0, 0, 0, 0.5);
 
   border-radius: 8px;
