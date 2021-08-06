@@ -6,7 +6,7 @@ module.exports = {
         config
             .plugin('html')
             .tap(args => {
-                args[0].title = "{updated in code dynamically}";
+                args[0].title = "Integration API Visualiser";
                 return args;
             })
     }
