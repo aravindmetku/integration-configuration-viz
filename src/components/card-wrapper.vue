@@ -4,6 +4,7 @@
     <div class="container">
       <card @click="processorClicked(p.pr, p.globalIdx)" v-for="(p, idx) in data[1]"
             v-bind:key="idx"
+            :is-in-clicked-state="selectedProcessorIndex === p.globalIdx"
             :processor="p.pr"
             :has-error="p.prErrors.length > 0"
       ></card>
@@ -28,8 +29,9 @@ export default {
   props: {
     data: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
+    selectedProcessorIndex: Number
   }
 }
 </script>

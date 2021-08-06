@@ -1,5 +1,5 @@
 <template>
-  <div class="processor-card">
+  <div class="processor-card" :class="{'clickedState': isInClickedState}">
     <div class="card-text" @click="clicked" :class="{'error': hasError}">
       <h6>{{ cardText }}</h6>
     </div>
@@ -59,7 +59,8 @@ export default {
       processorName: String,
       processorType: String
     },
-    hasError: Boolean
+    hasError: Boolean,
+    isInClickedState: Boolean
   },
   mounted() {
   }
@@ -96,7 +97,7 @@ export default {
   height: 20px;
 }
 
-.processor-card:hover {
+.processor-card:hover, .clickedState {
   background: linear-gradient(145deg, #ccced5, #f3f5fe);
   box-shadow: 5px 5px 10px #c5c7ce,
   -5px -5px 10px #ffffff;

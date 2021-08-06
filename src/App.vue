@@ -15,6 +15,7 @@
       <div class="resizer" ref="dragMe"></div>
       <div style="flex: 1 1 0">
         <cardWrapper :data="pr" @click="processorClicked"
+                     :selectedProcessorIndex="selectedProcessorIndex"
                      v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
       </div>
     </div>
