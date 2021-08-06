@@ -1,14 +1,30 @@
 <template>
  <div class="bar">
    <h2 class="title"> Integration API Configuration Visualiser</h2>
-   <a class="howitworks"
-      href="https://github.com/aravindmetku/integration-configuration-viz/blob/master/README.md#how-it-works">How it works?</a>
+   <div>
+     <input type="text"
+            v-model="connectorName"
+            @input="updated"
+            placeholder="session name">
+     <a class="howitworks"
+        href="https://github.com/aravindmetku/integration-configuration-viz/blob/master/README.md#how-it-works">How it works?</a>
+   </div>
  </div>
 </template>
 
 <script>
 export default {
-  name: "app-bar"
+  name: "app-bar",
+  data: function () {
+    return {
+      connectorName: ''
+    }
+  },
+  methods: {
+    updated() {
+      this.$emit("updateTitle", this.connectorName)
+    }
+  }
 }
 </script>
 
@@ -33,5 +49,22 @@ export default {
     cursor: pointer;
   }
 
+  input {
+    margin-right: 16px;
+    border-radius: 6px;
+    height: 100%;
+    padding-left: 25px;
+    outline: none;
+    border: none;
+    color: white;
+    background: #a5c4e3;
+    box-shadow: inset 5px 5px 10px #a0bedc,
+    inset -5px -5px 10px #aacaea;
+  }
+
+  ::placeholder {
+    color: grey;
+    opacity: 0.7; /* Firefox */
+  }
 
 </style>

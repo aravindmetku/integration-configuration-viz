@@ -6,7 +6,7 @@ module.exports = {
         config
             .plugin('html')
             .tap(args => {
-                args[0].title = "iAPI Visualiser";
+                args[0].title = "{updated in code dynamically}";
                 return args;
             })
     }

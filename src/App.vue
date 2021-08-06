@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <app-bar></app-bar>
+    <app-bar @updateTitle="onNewTitle"></app-bar>
     <div class="content">
       <div style="width:50%;border:2px;">
         <div class="stats-action">
@@ -134,6 +134,9 @@ export default {
     }
   },
   methods: {
+    onNewTitle(val) {
+      document.title = val ? `${val} | Integration Visualiser` : 'Integration Visualiser'
+    },
     updatedContent(val) {
       if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
         const current = [...this.displayData];
