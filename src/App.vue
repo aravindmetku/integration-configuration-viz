@@ -125,7 +125,8 @@ export default {
       leftWidth: 0,
       variableUsageHighlightProcessors: {
         initiatorProcessorGlobalIdx: null,
-        status: {}
+        status: {},
+        variableKey: null
       }
     }
   },
@@ -169,12 +170,15 @@ export default {
         if (!acc[curr.run]) {
           acc[curr.run] = []
         }
-        const _variableUsageHighlightProcessors = JSON.parse(JSON.stringify(this.variableUsageHighlightProcessors.status));
         acc[curr.run].push({
           pr: curr,
           prErrors: errors[curr.processorName] ?? [],
           globalIdx: i,
-          selectedVarInUsage: _variableUsageHighlightProcessors[curr.processorName] ?? false
+          selectedVarInUsage: {
+            isUsed: this.variableUsageHighlightProcessors.status[curr.processorName] ?? false,
+            initiatorProcessorGlobalIdx: this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx,
+            variableKey: this.variableUsageHighlightProcessors.variableKey,
+          }
         });
         return acc;
       }, {})
@@ -245,10 +249,12 @@ export default {
       this.selectedEditorDisplayToggle = 'PROCESSOR';
     },
     processorVariableClickedForUsages({initProcessorIdx, variableKey}) {
-      if(this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx === initProcessorIdx) {
+      if(this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx === initProcessorIdx
+      && this.variableUsageHighlightProcessors.variableKey === variableKey) {
         // reset
         this.variableUsageHighlightProcessors = {
           status: {},
+          variableKey: null,
           initiatorProcessorGlobalIdx: null
         }
         return;
@@ -274,6 +280,7 @@ export default {
 
       this.variableUsageHighlightProcessors = {
         status: usedInProcessors,
+        variableKey,
         initiatorProcessorGlobalIdx: initProcessorIdx
       }
     }

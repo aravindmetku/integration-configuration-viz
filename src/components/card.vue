@@ -1,16 +1,17 @@
 <template>
   <div class="processor-card" :class="{'clickedState': isInClickedState}">
-    <div class="card-text" @click="clicked" :class="{'variable-highlight': varHighlight, 'error': hasError}">
+    <div class="card-text" @click="clicked" :class="{'variable-highlight': varHighlight.isUsed, 'error': hasError}">
       <h6>{{ cardText }}</h6>
     </div>
     <div style="text-align:center">
-      <h3 class="processor-info" :style="{'background':bgColor,}" @mouseover="hover=true" @mouseleave="hover=false">
+      <h3 class="processor-info" :style="{'background':bgColor}" @mouseover="hover=true" @mouseleave="hover=false">
         <span v-if="hover">
         {{ processor.processorType }}
         </span>
       </h3>
     </div>
     <div style="text-align:center" v-for="v in processor.variables" v-bind:key="v.key" class="processor-info variable"
+         :class="{'variable-init': v.key === varHighlight.variableKey}"
          @click="findUsageClicked(v.key)"
          @mouseover="hover=true" @mouseleave="hover=false">
         <span v-if="hover">
@@ -71,7 +72,11 @@ export default {
       variables: Object
     },
     hasError: Boolean,
-    varHighlight: Boolean,
+    varHighlight: {
+      isUsed: Boolean,
+      initiatorProcessorGlobalIdx: Number,
+      variableKey: String
+    },
     isInClickedState: Boolean
   },
   mounted() {
@@ -117,6 +122,10 @@ export default {
 
 .processor-info.variable::-webkit-scrollbar {
   width: 0;
+}
+
+.processor-info.variable.variable-init {
+  border: 1px solid black;
 }
 
 .processor-card:hover, .clickedState {
