@@ -1,6 +1,6 @@
 <template>
   <div class="processor-card" :class="{'clickedState': isInClickedState}">
-    <div class="card-text" @click="clicked" :class="{'error': hasError}">
+    <div class="card-text" @click="clicked" :class="{'variable-highlight': varHighlight, 'error': hasError}">
       <h6>{{ cardText }}</h6>
     </div>
     <div style="text-align:center">
@@ -10,7 +10,9 @@
         </span>
       </h3>
     </div>
-    <div style="text-align:center" v-for="v in processor.variables" v-bind:key="v.key" class="processor-info variable" @mouseover="hover=true" @mouseleave="hover=false">
+    <div style="text-align:center" v-for="v in processor.variables" v-bind:key="v.key" class="processor-info variable"
+         @click="findUsageClicked(v.key)"
+         @mouseover="hover=true" @mouseleave="hover=false">
         <span v-if="hover">
           {{v.key}}
         </span>
@@ -55,6 +57,9 @@ export default {
   methods: {
     clicked() {
       this.$emit('click');
+    },
+    findUsageClicked(variableKey) {
+      this.$emit('findVariableUsage', variableKey);
     }
   },
   props: {
@@ -66,6 +71,7 @@ export default {
       variables: Object
     },
     hasError: Boolean,
+    varHighlight: Boolean,
     isInClickedState: Boolean
   },
   mounted() {
@@ -121,6 +127,10 @@ export default {
 
 .error {
   color: #A91E2C
+}
+
+.variable-highlight {
+  color: goldenrod;
 }
 
 .card-text h6 {
