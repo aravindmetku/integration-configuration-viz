@@ -95,7 +95,7 @@ export default {
   name: 'App',
   data: function () {
     return {
-      codeDisplayStr: '{"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
+      codeDisplayStr: '{"processors":[{"processorType":"inboundFactSheet","processorName":"Apps from Deployments","processorDescription":"creates Process FS from gives LDIF","run":1,"variables":[{"key":"app_variable","value":"${lx.relations.size()}"}]},{"processorType":"inboundFactSheet","processorName":"Updates description","processorDescription":"Updates description","run":2,"updates":[{"key":{"expr":"description"},"values":[{"expr":"Relations size is : ${variables[\'app_variable\']}"}]}]}]}',
       errorDisplayStr: `{
                             "results": null,
                             "warnings": [
