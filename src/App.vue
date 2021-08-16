@@ -77,7 +77,7 @@ function findLeavesOfJson(json) {
 const isVariableUsedInExpr = variableKey => s => {
   // sanitized variable key strings - remove dynamic parts
   const vk = variableKey.split(/\${[^}]+}/gm).filter(Boolean);
-  const variableUsageSyntax = /variables\[(.+?)]/gm;
+  const variableUsageSyntax = /variables[.|[](.+?)$|]]/gm;
   for (const sanitizedVar of vk) {
     let match = variableUsageSyntax.exec(s)
     while (match != null) {
