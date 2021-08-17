@@ -15,6 +15,7 @@
       <div class="resizer" ref="dragMe"></div>
       <div style="flex: 1 1 0">
         <cardWrapper :data="pr" @click="processorClicked"
+                     @onFindVariableUsageClicked="processorVariableClickedForUsages"
                      :selectedProcessorIndex="selectedProcessorIndex"
                      v-for="(pr, idx) in groupedProcessors" v-bind:key="idx"></cardWrapper>
       </div>
@@ -54,11 +55,47 @@ function displayErrorData(errorDisplayStr) {
   }
 }
 
+function findLeavesOfJson(json) {
+  if (!json) {
+    return []
+  }
+  const allLeaves = []
+
+  function find(o, res) {
+    if (typeof o === "string") {
+      res.push(o)
+      return
+    }
+    Object.values(o).forEach(v => find(v, res))
+  }
+
+  find(json, allLeaves)
+  return allLeaves
+}
+
+// not exact - this is basic string matching
+const isVariableUsedInExpr = variableKey => s => {
+  // sanitized variable key strings - remove dynamic parts
+  const vk = variableKey.split(/\${[^}]+}/gm).filter(Boolean);
+  const variableUsageSyntax = /variables[.|[](.+?)$|]]/gm;
+  for (const sanitizedVar of vk) {
+    let match = variableUsageSyntax.exec(s)
+    while (match != null) {
+      let isMatched = match[1].includes(sanitizedVar)
+      if (isMatched) {
+        return true
+      }
+      match = variableUsageSyntax.exec(s)
+    }
+  }
+  return false
+}
+
 export default {
   name: 'App',
   data: function () {
     return {
-      codeDisplayStr: '{"processors": [{"processorType": "inboundFactSheet","processorName": "Apps from Deployments","processorDescription": "creates Process FS from gives LDIF", "run": 1}]}',
+      codeDisplayStr: '{"processors":[{"processorType":"inboundFactSheet","processorName":"Apps from Deployments","processorDescription":"creates Process FS from gives LDIF","run":1,"variables":[{"key":"app_variable","value":"${lx.relations.size()}"}]},{"processorType":"inboundFactSheet","processorName":"Updates description","processorDescription":"Updates description","run":2,"updates":[{"key":{"expr":"description"},"values":[{"expr":"Relations size is : ${variables[\'app_variable\']}"}]}]}]}',
       errorDisplayStr: `{
                             "results": null,
                             "warnings": [
@@ -85,7 +122,12 @@ export default {
       x: 0,
       leftSide: 0,
       rightSide: 0,
-      leftWidth: 0
+      leftWidth: 0,
+      variableUsageHighlightProcessors: {
+        initiatorProcessorGlobalIdx: null,
+        status: {},
+        variableKey: null
+      }
     }
   },
   computed: {
@@ -128,7 +170,16 @@ export default {
         if (!acc[curr.run]) {
           acc[curr.run] = []
         }
-        acc[curr.run].push({pr: curr, prErrors: errors[curr.processorName] ?? [], globalIdx: i});
+        acc[curr.run].push({
+          pr: curr,
+          prErrors: errors[curr.processorName] ?? [],
+          globalIdx: i,
+          selectedVarInUsage: {
+            isUsed: this.variableUsageHighlightProcessors.status[curr.processorName] ?? false,
+            initiatorProcessorGlobalIdx: this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx,
+            variableKey: this.variableUsageHighlightProcessors.variableKey,
+          }
+        });
         return acc;
       }, {})
       return Object.entries(v);
@@ -196,6 +247,42 @@ export default {
     processorClicked(event) {
       this.selectedProcessorIndex = event.idx;
       this.selectedEditorDisplayToggle = 'PROCESSOR';
+    },
+    processorVariableClickedForUsages({initProcessorIdx, variableKey}) {
+      if(this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx === initProcessorIdx
+      && this.variableUsageHighlightProcessors.variableKey === variableKey) {
+        // reset
+        this.variableUsageHighlightProcessors = {
+          status: {},
+          variableKey: null,
+          initiatorProcessorGlobalIdx: null
+        }
+        return;
+      }
+
+      console.log('find var usages', variableKey)
+      let resetVarHighlightProcessors = this.groupedProcessors
+          .flatMap(x => x[1])
+          .map(gPr => {
+            gPr.selectedVarInUsage = false
+            return gPr
+          });
+      const _isVariableUsedInString = isVariableUsedInExpr(variableKey)
+      const usedInProcessors = resetVarHighlightProcessors
+          .filter(gPr => gPr.globalIdx !== initProcessorIdx)
+          .filter(gPr => {
+            return !!findLeavesOfJson(gPr).find(_isVariableUsedInString)
+          })
+          .reduce((acc, gPr) => {
+            acc[gPr.pr.processorName] = true
+            return acc;
+          }, {});
+
+      this.variableUsageHighlightProcessors = {
+        status: usedInProcessors,
+        variableKey,
+        initiatorProcessorGlobalIdx: initProcessorIdx
+      }
     }
   },
   components: {
@@ -257,5 +344,5 @@ export default {
   font-style: normal;
   font-weight: normal;
   src: local('Axiforma Regular'), url('assets/font/Kastelov  Axiforma Regular.woff') format('woff');
-  }
+}
 </style>

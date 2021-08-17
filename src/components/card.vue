@@ -1,14 +1,22 @@
 <template>
   <div class="processor-card" :class="{'clickedState': isInClickedState}">
-    <div class="card-text" @click="clicked" :class="{'error': hasError}">
+    <div class="card-text" @click="clicked" :class="{'variable-highlight': varHighlight.isUsed, 'error': hasError}">
       <h6>{{ cardText }}</h6>
     </div>
     <div style="text-align:center">
-      <h3 class="processor-type" :style="{'background':bgColor,}" @mouseover="hover=true" @mouseleave="hover=false">
+      <h3 class="processor-info" :style="{'background':bgColor}" @mouseover="hover=true" @mouseleave="hover=false">
         <span v-if="hover">
         {{ processor.processorType }}
         </span>
       </h3>
+    </div>
+    <div style="text-align:center" v-for="v in processor.variables" v-bind:key="v.key" class="processor-info variable"
+         :class="{'variable-init': v.key === varHighlight.variableKey}"
+         @click="findUsageClicked(v.key)"
+         @mouseover="hover=true" @mouseleave="hover=false">
+        <span v-if="hover">
+          {{v.key}}
+        </span>
     </div>
   </div>
 </template>
@@ -50,6 +58,9 @@ export default {
   methods: {
     clicked() {
       this.$emit('click');
+    },
+    findUsageClicked(variableKey) {
+      this.$emit('findVariableUsage', variableKey);
     }
   },
   props: {
@@ -57,9 +68,15 @@ export default {
       run: Number,
       processorDescription: String,
       processorName: String,
-      processorType: String
+      processorType: String,
+      variables: Object
     },
     hasError: Boolean,
+    varHighlight: {
+      isUsed: Boolean,
+      initiatorProcessorGlobalIdx: Number,
+      variableKey: String
+    },
     isInClickedState: Boolean
   },
   mounted() {
@@ -82,7 +99,7 @@ export default {
   -5px -5px 10px #f6fbff;
 }
 
-.processor-type {
+.processor-info {
   color: #f5f5f5;
   padding: 2px;
   font-size: small;
@@ -90,11 +107,25 @@ export default {
   width: 100%;
   height: 10px;
   transition: height 0.5s;
-  margin: 0
+  margin: 3px 0 0 0;
 }
 
-.processor-type:hover {
+.processor-info:hover {
   height: 20px;
+}
+
+.processor-info.variable {
+  background: goldenrod;
+  color: white;
+  overflow-y: scroll;
+}
+
+.processor-info.variable::-webkit-scrollbar {
+  width: 0;
+}
+
+.processor-info.variable.variable-init {
+  border: 1px solid black;
 }
 
 .processor-card:hover, .clickedState {
@@ -105,6 +136,10 @@ export default {
 
 .error {
   color: #A91E2C
+}
+
+.variable-highlight {
+  color: goldenrod;
 }
 
 .card-text h6 {
