@@ -11,6 +11,12 @@
                 :codeMirrorTheme="codeMirrorTheme"
                 @updated="updatedContent"
         ></editor>
+        <span v-if="fileHandlerManager.fileName" class="fileSync">
+          Last Synced {{fileHandlerManager.fileName}} at {{fileHandlerManager.lastUpdatedAt}} ({{ fileHandlerManager.updateStatus }})
+        </span>
+        <span v-else class="fileSync" @click="createFileHandlerForSession">
+          {{ fileHandlerManager.updateStatus }}
+        </span>
       </div>
       <div class="resizer" ref="dragMe"></div>
       <div style="flex: 1 1 0">
@@ -73,6 +79,34 @@ function findLeavesOfJson(json) {
   return allLeaves
 }
 
+async function open(pickerOpts) {
+  const [fileHandle] = await window.showOpenFilePicker(pickerOpts);
+
+  if (fileHandle.kind !== 'file') {
+    console.error("Select a file")
+    return;
+  }
+
+  return fileHandle;
+}
+
+async function writeToFile(fileHandler, fileHandlerManager, content) {
+  if (!fileHandler) {
+    console.error("No file is selected.")
+    return;
+  }
+  try {
+    const writableStream = await fileHandler.createWritable();
+    await writableStream.write(content);
+    await writableStream.close();
+    fileHandlerManager.lastUpdatedAt = new Date().toISOString();
+    fileHandlerManager.updateStatus = 'file in Sync!'
+  } catch (e) {
+    console.log(e);
+    fileHandlerManager.updateStatus = 'failed to save to the file. Beware loss of data!'
+  }
+}
+
 // not exact - this is basic string matching
 const isVariableUsedInExpr = variableKey => s => {
   // sanitized variable key strings - remove dynamic parts
@@ -90,6 +124,9 @@ const isVariableUsedInExpr = variableKey => s => {
   }
   return false
 }
+
+
+let fileHandler;
 
 export default {
   name: 'App',
@@ -127,7 +164,12 @@ export default {
         initiatorProcessorGlobalIdx: null,
         status: {},
         variableKey: null
-      }
+      },
+      fileHandlerManager: {
+        fileName: null,
+        updateStatus: 'click here to select Integration API JSON file!',
+        lastUpdatedAt: 'never'
+      },
     }
   },
   computed: {
@@ -186,6 +228,26 @@ export default {
     }
   },
   methods: {
+    async createFileHandlerForSession() {
+      const pickerOpts = {
+        types: [
+          {
+            description: 'Json',
+            accept: {
+              'json/*': ['.json']
+            }
+          },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+      };
+
+      fileHandler = await open(pickerOpts);
+      this.fileHandlerManager.updateStatus = 'file selected';
+      this.fileHandlerManager.fileName = fileHandler.name;
+      const file = await fileHandler.getFile();
+      this.codeDisplayStr = await file.text();
+    },
     onNewTitle(val) {
       document.title = val ? `${val} | Integration Visualiser` : 'Integration Visualiser'
     },
@@ -198,6 +260,7 @@ export default {
         this.codeDisplayStr = JSON.stringify(parse);
       } else if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         this.codeDisplayStr = val;
+        writeToFile(fileHandler, this.fileHandlerManager, val).then(() => console.log('Saved to file!'));
       } else {
         this.errorDisplayStr = val;
       }
@@ -249,8 +312,8 @@ export default {
       this.selectedEditorDisplayToggle = 'PROCESSOR';
     },
     processorVariableClickedForUsages({initProcessorIdx, variableKey}) {
-      if(this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx === initProcessorIdx
-      && this.variableUsageHighlightProcessors.variableKey === variableKey) {
+      if (this.variableUsageHighlightProcessors.initiatorProcessorGlobalIdx === initProcessorIdx
+          && this.variableUsageHighlightProcessors.variableKey === variableKey) {
         // reset
         this.variableUsageHighlightProcessors = {
           status: {},
@@ -337,6 +400,13 @@ export default {
   grid-template-columns: 4fr 1fr;
   column-gap: 5%;
   margin-top: 20px;
+}
+
+.fileSync {
+  margin-left: 20px;
+  font-size: smaller;
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 @font-face {
