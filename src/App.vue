@@ -242,6 +242,10 @@ export default {
         multiple: false
       };
 
+      if(!window.showOpenFilePicker) {
+        this.fileHandlerManager.updateStatus = 'file system access is unavailable. Hint: Use different browser';
+        return;
+      }
       fileHandler = await open(pickerOpts);
       this.fileHandlerManager.updateStatus = 'file selected';
       this.fileHandlerManager.fileName = fileHandler.name;
