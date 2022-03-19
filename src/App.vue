@@ -112,6 +112,7 @@ const isVariableUsedInExpr = variableKey => s => {
   // sanitized variable key strings - remove dynamic parts
   const vk = variableKey.split(/\${[^}]+}/gm).filter(Boolean);
   const variableUsageSyntax = /variables[.|[](.+?)$|]]/gm;
+  const variableUsageSyntax2 = /helper:getFromMap\(variables,(.+?)\)/gm;
   for (const sanitizedVar of vk) {
     let match = variableUsageSyntax.exec(s)
     while (match != null) {
@@ -121,6 +122,16 @@ const isVariableUsedInExpr = variableKey => s => {
       }
       match = variableUsageSyntax.exec(s)
     }
+
+    let match2 = variableUsageSyntax2.exec(s)
+    while (match2 != null) {
+      let isMatched2 = match2[1].includes(sanitizedVar)
+      if (isMatched2) {
+        return true
+      }
+      match2 = variableUsageSyntax2.exec(s)
+    }
+
   }
   return false
 }
@@ -132,7 +143,33 @@ export default {
   name: 'App',
   data: function () {
     return {
-      codeDisplayStr: '{"processors":[{"processorType":"inboundFactSheet","processorName":"Apps from Deployments","processorDescription":"creates Process FS from gives LDIF","run":1,"variables":[{"key":"app_variable","value":"${lx.relations.size()}"}]},{"processorType":"inboundFactSheet","processorName":"Updates description","processorDescription":"Updates description","run":2,"updates":[{"key":{"expr":"description"},"values":[{"expr":"Relations size is : ${variables[\'app_variable\']}"}]}]}]}',
+      codeDisplayStr: `
+       {
+          "processors": [{
+            "processorType": "inboundFactSheet",
+            "processorName": "Apps from Deployments",
+            "processorDescription": "creates Process FS from gives LDIF",
+            "run": 1,
+            "variables": [{
+               "key": "app_variable",
+               "value": "\${lx.relations.size()}"
+            }]
+          }, {
+            "processorType": "inboundFactSheet",
+            "processorName": "Updates description",
+            "processorDescription": "Updates description",
+            "run": 2,
+            "updates": [{
+               "key": {
+                 "expr": "description"
+               },
+               "values": [{
+                 "expr": "Relations size is : \${helper:getFromMap(variables, 'app_variable')}"
+               }]
+            }]
+          }]
+        }
+      `,
       errorDisplayStr: `{
                             "results": null,
                             "warnings": [
