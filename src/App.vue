@@ -145,6 +145,11 @@ export default {
     return {
       codeDisplayStr: `
        {
+          "connectorType": "leanix-vsm-connector",
+          "connectorId": "leanix-connector",
+          "connectorVersion": "1.0.0",
+          "processingDirection": "inbound",
+          "processingMode": "full",
           "processors": [{
             "processorType": "inboundFactSheet",
             "processorName": "Apps from Deployments",
@@ -207,6 +212,7 @@ export default {
         updateStatus: 'click here to select Integration API JSON file!',
         lastUpdatedAt: 'never'
       },
+      isSessionTitleUpdatedManually: false,
     }
   },
   computed: {
@@ -227,6 +233,9 @@ export default {
       }
     },
     displayDataStr: function () {
+      if(!this.isSessionTitleUpdatedManually) {
+        this.onNewTitle(JSON.parse(this.codeDisplayStr).connectorId)
+      }
       if (this.selectedEditorDisplayToggle === 'CONNECTOR') {
         return JSON.stringify(JSON.parse(this.codeDisplayStr), null, 2);
       } else if (this.selectedEditorDisplayToggle === 'PROCESSOR') {
@@ -290,6 +299,7 @@ export default {
       this.codeDisplayStr = await file.text();
     },
     onNewTitle(val) {
+      this.isSessionTitleUpdatedManually = true;
       document.title = val ? `${val} | Integration Visualiser` : 'Integration Visualiser'
     },
     updatedContent(val) {
