@@ -1,5 +1,9 @@
 # integration API Visualiser
 
+<img width="1432" alt="image" src="https://user-images.githubusercontent.com/64901333/171776144-1792d32b-3078-4611-beb0-457f1c99af97.png">
+<img width="1430" alt="image" src="https://user-images.githubusercontent.com/64901333/171776301-9c308d48-4e01-4dfc-b5da-8b7937c1341b.png">
+
+
 ## How it Works?
 1. Simply copy your integration API connector in 'Connector' editor section **(Processors should have unique processors names)**
 2. Click on 'Processor' to work with individual processor. Each processor type is **color-coded**.
@@ -30,6 +34,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
